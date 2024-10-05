@@ -96,11 +96,22 @@ repositories {
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
         content { includeGroup "thedarkcolour" }
     }
+    maven {
+        name = 'Forge' // Terrablender uses Forge maven
+        url = "https://maven.minecraftforge.net"
+    }
+    maven {
+        name = "CurseMaven"
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies {
     // Must use the '-neoforge' version on NeoForge. If on regular forge, omit the '-neoforge'
     implementation 'thedarkcolour:kotlinforforge-neoforge:5.5.0'
+    implementation 'com.github.glitchfiend:TerraBlender-neoforge:' + minecraft_version + '-' + terrablender_version
+
+    localRuntime "curse.maven:TwilightForest-227639:5759335"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
