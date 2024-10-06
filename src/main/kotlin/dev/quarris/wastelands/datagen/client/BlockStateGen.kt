@@ -2,6 +2,7 @@ package dev.quarris.wastelands.datagen.client
 
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BlockSetup
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -14,21 +15,104 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, ModRef.ID, exFileHelper) {
 
     override fun registerStatesAndModels() {
+        genLogs()
+        genWood()
+
         BlockSetup.DRIED_DIRT.get().let { sand ->
             simpleRandomRotatedBlock(sand)
         }
+    }
 
-        BlockSetup.DEAD_WOOD_LOG.get().let { log ->
-            simpleBlockWithItem(log, models().cubeColumn(name(log), blockTexture(log), blockTexture(log).withSuffix("_top")))
+    private fun genWood() {
+        BlockSetup.DEAD_OAK_PLANKS.get().let { planks ->
+            simpleBlockWithItem(planks, cubeAll(planks))
         }
-        BlockSetup.CHARRED_DEAD_WOOD_LOG.get().let { log ->
-            simpleBlockWithItem(log, models().cubeColumn(name(log), blockTexture(log), blockTexture(log).withSuffix("_top")))
+
+        val deadPlanksTexture = blockTexture(BlockSetup.DEAD_OAK_PLANKS.get())
+        BlockSetup.DEAD_OAK_SLAB.get().let { block ->
+            slabBlock(block, deadPlanksTexture, deadPlanksTexture)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
-        BlockSetup.STRIPPED_DEAD_WOOD_LOG.get().let { log ->
-            simpleBlockWithItem(log, models().cubeColumn(name(log), blockTexture(log), blockTexture(log).withSuffix("_top")))
+        BlockSetup.DEAD_OAK_STAIRS.get().let { block ->
+            stairsBlock(block, deadPlanksTexture)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
-        BlockSetup.STRIPPED_CHARRED_DEAD_WOOD_LOG.get().let { log ->
-            simpleBlockWithItem(log, models().cubeColumn(name(log), blockTexture(log), blockTexture(log).withSuffix("_top")))
+        BlockSetup.DEAD_OAK_FENCE.get().let { block ->
+            fenceBlock(block, deadPlanksTexture)
+            simpleBlockItem(
+                block,
+                models().withExistingParent(name(block) + "_inventory", "block/fence_inventory")
+                    .texture("texture", deadPlanksTexture)
+            )
+        }
+        BlockSetup.DEAD_OAK_FENCE_GATE.get().let { block ->
+            fenceGateBlock(block, deadPlanksTexture)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
+        }
+
+        BlockSetup.DEAD_OAK_PRESSURE_PLATE.get().let { block ->
+            pressurePlateBlock(block, deadPlanksTexture)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
+        }
+
+        BlockSetup.DEAD_OAK_BUTTON.get().let { block ->
+            buttonBlock(block, deadPlanksTexture)
+            simpleBlockItem(
+                block,
+                models().withExistingParent(name(block) + "_inventory", "block/button_inventory")
+                    .texture("texture", deadPlanksTexture)
+            )
+        }
+
+        BlockSetup.DEAD_OAK_DOOR.get().let { block ->
+            val texture = blockTexture(block)
+            doorBlockWithRenderType(block, texture.withSuffix("_bottom"), texture.withSuffix("_top"), RenderType.CUTOUT.name)
+            itemModels().basicItem(block.asItem())
+        }
+
+        BlockSetup.DEAD_OAK_TRAPDOOR.get().let { block ->
+            val texture = blockTexture(block)
+            trapdoorBlockWithRenderType(block, texture, true, RenderType.CUTOUT.name)
+            simpleBlockItem(block, models().getExistingFile(key(block).withSuffix("_bottom")))
+        }
+    }
+
+    private fun genLogs() {
+        BlockSetup.DEAD_OAK_LOG.get().let { log ->
+            logBlock(log)
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+        BlockSetup.CHARRED_DEAD_OAK_LOG.get().let { log ->
+            logBlock(log)
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+        BlockSetup.STRIPPED_DEAD_OAK_LOG.get().let { log ->
+            logBlock(log)
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get().let { log ->
+            logBlock(log)
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+
+        BlockSetup.DEAD_OAK_WOOD.get().let { log ->
+            axisBlock(log, blockTexture(log), blockTexture(log))
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+
+        BlockSetup.STRIPPED_DEAD_OAK_WOOD.get().let { log ->
+            axisBlock(log, blockTexture(log), blockTexture(log))
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+
+        BlockSetup.CHARRED_DEAD_OAK_WOOD.get().let { log ->
+            axisBlock(log, blockTexture(log), blockTexture(log))
+            simpleBlockItem(log, models().getExistingFile(key(log)))
+        }
+
+        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get().let { log ->
+            axisBlock(log, blockTexture(log), blockTexture(log))
+            simpleBlockItem(log, models().getExistingFile(key(log)))
         }
     }
 

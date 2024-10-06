@@ -11,4 +11,8 @@ object ModRef {
     fun res(name: String): ResourceLocation {
         return ResourceLocation.fromNamespaceAndPath(ID, name)
     }
+
+    fun key(group: String, key: String): String {
+        return "${group}.${ID}.${key}"
+    }
 }

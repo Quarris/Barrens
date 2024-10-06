@@ -1,5 +1,7 @@
 package dev.quarris.wastelands.worldgen
 
+import dev.quarris.wastelands.datagen.server.PlacedFeatureGen
+import dev.quarris.wastelands.setup.PlacedFeatureSetup
 import net.minecraft.core.HolderGetter
 import net.minecraft.data.worldgen.Carvers
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements
@@ -23,7 +25,10 @@ object BiomeGenerators {
         val mobSettings = MobSpawnSettings.Builder()
             .build()
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+            .addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE)
+            .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_WATER)
             .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_LAVA)
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DEAD_WOOD)
 
         //BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
         //generationSettings.addFeature(
