@@ -10,4 +10,5 @@ object PlacedFeatureSetup {
     val SLATE_BOULDER = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("slate_boulder"))
     val DRIED_GRASS_PATCH = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("dried_grass_patch"))
     val DRIED_GRASS_BONEMEAL = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("single_dried_grass"))
+    val DRIED_DIRT_WATER_LAKE = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("dried_dirt_water_lake"))
 }

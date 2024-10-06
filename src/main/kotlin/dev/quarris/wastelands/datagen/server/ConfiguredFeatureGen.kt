@@ -10,6 +10,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
+import net.minecraft.world.level.levelgen.feature.LakeFeature
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
@@ -47,6 +48,17 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
             ConfiguredFeature(
                 Feature.SIMPLE_BLOCK,
                 SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DRIED_SHORT_GRASS.get().defaultBlockState()))
+            )
+        )
+
+        context.register(
+            ConfiguredFeatureSetup.DRIED_DIRT_WATER_LAKE,
+            ConfiguredFeature(
+                Feature.LAKE,
+                LakeFeature.Configuration(
+                    BlockStateProvider.simple(Blocks.WATER.defaultBlockState()),
+                    BlockStateProvider.simple(BlockSetup.DRIED_DIRT.get().defaultBlockState())
+                )
             )
         )
     }

@@ -17,6 +17,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         val slateBoulderFeature = features.getOrThrow(ConfiguredFeatureSetup.SLATE_BOULDER)
         val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DRIED_GRASS)
         val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SINGLE_DRIED_GRASS)
+        val waterLake = features.getOrThrow(ConfiguredFeatureSetup.DRIED_DIRT_WATER_LAKE)
 
         context.register(
             PlacedFeatureSetup.DEAD_OAK_TREE, PlacedFeature(
@@ -47,6 +48,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
                     NoiseThresholdCountPlacement.of(-0.8, 5, 10),
                     InSquarePlacement.spread(),
                     PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                    PlacementUtils.isEmpty(),
                     BiomeFilter.biome()
                 )
             )
@@ -54,6 +56,16 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
 
         context.register(
             PlacedFeatureSetup.DRIED_GRASS_BONEMEAL, PlacedFeature(singleDriedGrass, listOf(PlacementUtils.isEmpty()))
+        )
+
+        context.register(
+            PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE, PlacedFeature(
+                waterLake, listOf(
+                    RarityFilter.onAverageOnceEvery(20),
+                    PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                    BiomeFilter.biome()
+                )
+            )
         )
     }
 }

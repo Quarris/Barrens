@@ -25,6 +25,7 @@ object BiomeGenerators {
             .build()
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
             .addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE)
+            .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE)
             .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SLATE_BOULDER)
             .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_WATER)
             .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_LAVA)
