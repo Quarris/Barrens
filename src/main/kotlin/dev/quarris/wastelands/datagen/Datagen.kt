@@ -11,6 +11,7 @@ import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataProvider
 import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber

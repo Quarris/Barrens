@@ -72,7 +72,7 @@ object BlockSetup {
     val DEAD_OAK_PLANKS: DeferredBlock<Block> = registerBlockWithItem(
         "dead_oak_planks", ::Block
     ) {
-        Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F)
+        Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASS).strength(1.0F)
             .sound(SoundType.WOOD).ignitedByLava()
     }
 
@@ -91,7 +91,7 @@ object BlockSetup {
     val DEAD_OAK_FENCE_GATE: DeferredBlock<FenceGateBlock> =
         registerBlockWithItem("dead_oak_fence_gate", { props -> FenceGateBlock(WoodTypeSetup.DEAD_OAK, props) }, {
             Properties.of().mapColor(DEAD_OAK_PLANKS.get().defaultMapColor()).forceSolidOn()
-                .instrument(NoteBlockInstrument.BASS).strength(2.0f, 3.0f).ignitedByLava()
+                .instrument(NoteBlockInstrument.BASS).strength(1.0F).ignitedByLava()
         })
     val DEAD_OAK_PRESSURE_PLATE: DeferredBlock<PressurePlateBlock> = registerBlockWithItem("dead_oak_pressure_plate",
         { props -> PressurePlateBlock(BlockSetSetup.DEAD_OAK, props) },
@@ -110,7 +110,7 @@ object BlockSetup {
             Properties.of()
                 .mapColor(DEAD_OAK_PLANKS.get().defaultMapColor())
                 .instrument(NoteBlockInstrument.BASS)
-                .strength(3.0f)
+                .strength(2.0F)
                 .noOcclusion()
                 .ignitedByLava()
                 .pushReaction(PushReaction.DESTROY)
@@ -121,10 +121,19 @@ object BlockSetup {
             Properties.of()
                 .mapColor(DEAD_OAK_PLANKS.get().defaultMapColor())
                 .instrument(NoteBlockInstrument.BASS)
-                .strength(3.0f)
+                .strength(2.0f)
                 .noOcclusion()
                 .isValidSpawn { state, blockGetter, pos, entity -> Blocks.never(state, blockGetter, pos, entity) }
                 .ignitedByLava()
+        }
+
+    val SLATE: DeferredBlock<Block> =
+        registerBlockWithItem("slate", ::Block) {
+            Properties.of()
+                .mapColor(MapColor.STONE)
+                .instrument(NoteBlockInstrument.SNARE)
+                .strength(0.6f)
+                .sound(SoundType.GRAVEL)
         }
 
     private fun <B : Block> registerBlockWithItem(

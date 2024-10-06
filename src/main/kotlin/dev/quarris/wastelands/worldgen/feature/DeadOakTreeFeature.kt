@@ -10,10 +10,10 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration
 
-class DeadWoodFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Feature<ProbabilityFeatureConfiguration>(codec) {
+class DeadOakTreeFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Feature<ProbabilityFeatureConfiguration>(codec) {
 
-    private val DEAD_WOOD = BlockSetup.DEAD_OAK_WOOD.get().defaultBlockState()
-    private val CHARRED_DEAD_WOOD = BlockSetup.CHARRED_DEAD_OAK_WOOD.get().defaultBlockState()
+    private val DEAD_OAK_WOOD = BlockSetup.DEAD_OAK_WOOD.get().defaultBlockState()
+    private val CHARRED_DEAD_OAK_WOOD = BlockSetup.CHARRED_DEAD_OAK_WOOD.get().defaultBlockState()
 
     override fun place(context: FeaturePlaceContext<ProbabilityFeatureConfiguration>): Boolean {
         val random = context.random()
@@ -79,7 +79,7 @@ class DeadWoodFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Feature<P
     }
 
     private fun deadLogOrCharred(random: RandomSource, charredChance: Float): BlockState {
-        return if (random.nextFloat() < charredChance) CHARRED_DEAD_WOOD else DEAD_WOOD
+        return if (random.nextFloat() < charredChance) CHARRED_DEAD_OAK_WOOD else DEAD_OAK_WOOD
     }
 
 }

@@ -6,5 +6,6 @@ import net.minecraft.resources.ResourceKey
 
 object PlacedFeatureSetup {
 
-    val DEAD_WOOD = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("dead_wood"))
+    val DEAD_OAK_TREE = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("dead_oak_tree"))
+    val SLATE_BOULDER = ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res("slate_boulder"))
 }

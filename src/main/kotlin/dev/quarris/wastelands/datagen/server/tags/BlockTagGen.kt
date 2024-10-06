@@ -70,5 +70,9 @@ class BlockTagGen(
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
             BlockSetup.DRIED_DIRT.get()
         )
+
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
+            BlockSetup.SLATE.get()
+        )
     }
 }

@@ -7,15 +7,45 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
     RecipeProvider(output, registries) {
 
     override fun buildRecipes(output: RecipeOutput) {
+        createWoodRecipes(output)
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 4)
+            .requires(BlockSetup.SLATE)
+            .unlockedBy("has_slate", has(BlockSetup.SLATE))
+            .save(output)
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockSetup.SLATE)
+            .pattern("##")
+            .pattern("##")
+            .define('#', Items.FLINT)
+            .unlockedBy("has_flint", has(Items.FLINT))
+            .save(output)
+    }
+
+    private fun createWoodRecipes(output: RecipeOutput) {
         planksFromLog(output, BlockSetup.DEAD_OAK_PLANKS, ItemTagSetup.DEAD_OAK_LOGS, 2)
+        woodFromLogs(output, BlockSetup.DEAD_OAK_WOOD, BlockSetup.DEAD_OAK_LOG)
+        woodFromLogs(output, BlockSetup.CHARRED_DEAD_OAK_WOOD, BlockSetup.CHARRED_DEAD_OAK_LOG)
+        woodFromLogs(output, BlockSetup.STRIPPED_DEAD_OAK_WOOD, BlockSetup.STRIPPED_DEAD_OAK_LOG)
+        woodFromLogs(output, BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD, BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG)
+        woodFromLogs(output, BlockSetup.DEAD_OAK_LOG, BlockSetup.DEAD_OAK_WOOD)
+        woodFromLogs(output, BlockSetup.CHARRED_DEAD_OAK_LOG, BlockSetup.CHARRED_DEAD_OAK_WOOD)
+        woodFromLogs(output, BlockSetup.STRIPPED_DEAD_OAK_LOG, BlockSetup.STRIPPED_DEAD_OAK_WOOD)
+        woodFromLogs(output, BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG, BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD)
         slab(output, RecipeCategory.BUILDING_BLOCKS, BlockSetup.DEAD_OAK_SLAB, BlockSetup.DEAD_OAK_PLANKS)
         stairs(output, BlockSetup.DEAD_OAK_STAIRS, BlockSetup.DEAD_OAK_PLANKS)
         fence(output, BlockSetup.DEAD_OAK_FENCE, BlockSetup.DEAD_OAK_PLANKS)

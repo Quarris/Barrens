@@ -75,6 +75,10 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             trapdoorBlockWithRenderType(block, texture, true, RenderType.CUTOUT.name)
             simpleBlockItem(block, models().getExistingFile(key(block).withSuffix("_bottom")))
         }
+
+        BlockSetup.SLATE.get().let { block ->
+            simpleRandomRotatedBlock(block)
+        }
     }
 
     private fun genLogs() {

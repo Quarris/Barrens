@@ -33,6 +33,8 @@ class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_
         this.add(BlockSetup.DEAD_OAK_BUTTON.get(), "Dead Oak Button")
         this.add(BlockSetup.DEAD_OAK_DOOR.get(), "Dead Oak Door")
         this.add(BlockSetup.DEAD_OAK_TRAPDOOR.get(), "Dead Oak Trapdoor")
+
+        this.add(BlockSetup.SLATE.get(), "Slate")
     }
 
     private fun addMisc() {
