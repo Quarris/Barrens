@@ -2,7 +2,9 @@ package dev.quarris.wastelands.worldgen
 
 import dev.quarris.wastelands.setup.PlacedFeatureSetup
 import net.minecraft.core.HolderGetter
+import net.minecraft.data.worldgen.BiomeDefaultFeatures
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements
+import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.biome.Biome
@@ -26,7 +28,10 @@ object BiomeGenerators {
             .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SLATE_BOULDER)
             .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_WATER)
             .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_LAVA)
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DRIED_GRASS_PATCH)
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DEAD_OAK_TREE)
+
+        BiomeDefaultFeatures.addDefaultOres(generationSettings)
 
         //BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
         //generationSettings.addFeature(
@@ -53,7 +58,7 @@ object BiomeGenerators {
                     .waterFogColor(0xff3b3821.toInt())
                     .fogColor(0x696754)
                     .skyColor(0x5e5d4b)
-                    .grassColorOverride(0x7f8c53)
+                    .grassColorOverride(0x85a322)
                     //.ambientLoopSound(SoundEvents.AMBIENT_NETHER_WASTES_LOOP)
                     //.ambientMoodSound(AmbientMoodSettings(SoundEvents.AMBIENT_NETHER_WASTES_MOOD, 6000, 8, 2.0))
                     //.ambientAdditionsSound(

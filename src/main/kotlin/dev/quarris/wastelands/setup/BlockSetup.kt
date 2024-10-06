@@ -1,11 +1,12 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package dev.quarris.wastelands.setup
 
 import dev.quarris.wastelands.ModRef
+import dev.quarris.wastelands.block.DriedShortGrass
+import dev.quarris.wastelands.block.DriedDirtBlock
 import dev.quarris.wastelands.block.WoodBlock
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
@@ -22,7 +23,7 @@ object BlockSetup {
     val REGISTRY: DeferredRegister.Blocks = DeferredRegister.createBlocks(ModRef.ID)
 
     val DRIED_DIRT: DeferredBlock<Block> = registerBlockWithItem(
-        "dried_dirt", ::Block
+        "dried_dirt", ::DriedDirtBlock
     ) {
         Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
             .strength(1.2F, 2.0F)
@@ -134,6 +135,19 @@ object BlockSetup {
                 .instrument(NoteBlockInstrument.SNARE)
                 .strength(0.6f)
                 .sound(SoundType.GRAVEL)
+        }
+
+    val DRIED_SHORT_GRASS: DeferredBlock<DriedShortGrass> =
+        registerBlockWithItem("dried_short_grass", ::DriedShortGrass) {
+            Properties.of()
+                .mapColor(MapColor.PLANT)
+                .replaceable()
+                .noCollission()
+                .instabreak()
+                .sound(SoundType.GRASS)
+                .offsetType(BlockBehaviour.OffsetType.XYZ)
+                .ignitedByLava()
+                .pushReaction(PushReaction.DESTROY)
         }
 
     private fun <B : Block> registerBlockWithItem(

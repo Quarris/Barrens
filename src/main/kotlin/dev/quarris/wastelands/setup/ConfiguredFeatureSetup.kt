@@ -8,4 +8,6 @@ object ConfiguredFeatureSetup {
 
     val DEAD_OAK_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("dead_oak_tree"))
     val SLATE_BOULDER = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("slate_boulder"))
+    val DRIED_GRASS = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("dried_grass"))
+    val SINGLE_DRIED_GRASS = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("single_dried_grass"))
 }

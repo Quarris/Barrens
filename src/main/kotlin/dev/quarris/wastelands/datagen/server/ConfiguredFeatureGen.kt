@@ -5,11 +5,15 @@ import dev.quarris.wastelands.setup.ConfiguredFeatureSetup
 import dev.quarris.wastelands.setup.FeatureSetup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.world.level.levelgen.feature.BlockBlobFeature
+import net.minecraft.data.worldgen.features.FeatureUtils
+import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 
 object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -22,6 +26,27 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
             ConfiguredFeature(
                 FeatureSetup.BOULDER.get(),
                 BlockStateConfiguration(BlockSetup.SLATE.get().defaultBlockState())
+            )
+        )
+        context.register(
+            ConfiguredFeatureSetup.DRIED_GRASS,
+            ConfiguredFeature(
+                Feature.RANDOM_PATCH,
+                FeatureUtils.simpleRandomPatchConfiguration(
+                    12,
+                    PlacementUtils.onlyWhenEmpty<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(
+                        Feature.SIMPLE_BLOCK,
+                        SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DRIED_SHORT_GRASS.get()))
+                    )
+                )
+            )
+        )
+
+        context.register(
+            ConfiguredFeatureSetup.SINGLE_DRIED_GRASS,
+            ConfiguredFeature(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DRIED_SHORT_GRASS.get().defaultBlockState()))
             )
         )
     }

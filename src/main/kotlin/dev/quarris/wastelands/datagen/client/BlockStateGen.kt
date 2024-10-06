@@ -9,6 +9,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
@@ -18,14 +20,22 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
         genLogs()
         genWood()
 
-        BlockSetup.DRIED_DIRT.get().let { sand ->
-            simpleRandomRotatedBlock(sand)
+        BlockSetup.DRIED_DIRT.get().let { block ->
+            simpleRandomRotatedBlock(block)
+        }
+
+        BlockSetup.DRIED_SHORT_GRASS.get().let { block ->
+            simpleBlock(
+                block, models().cross(name(block), blockTexture(block))
+                    .renderType(RenderType.CUTOUT.name)
+            )
+            generatedBlockItem(block)
         }
     }
 
     private fun genWood() {
-        BlockSetup.DEAD_OAK_PLANKS.get().let { planks ->
-            simpleBlockWithItem(planks, cubeAll(planks))
+        BlockSetup.DEAD_OAK_PLANKS.get().let { block ->
+            simpleBlockWithItem(block, cubeAll(block))
         }
 
         val deadPlanksTexture = blockTexture(BlockSetup.DEAD_OAK_PLANKS.get())
@@ -66,7 +76,12 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
 
         BlockSetup.DEAD_OAK_DOOR.get().let { block ->
             val texture = blockTexture(block)
-            doorBlockWithRenderType(block, texture.withSuffix("_bottom"), texture.withSuffix("_top"), RenderType.CUTOUT.name)
+            doorBlockWithRenderType(
+                block,
+                texture.withSuffix("_bottom"),
+                texture.withSuffix("_top"),
+                RenderType.CUTOUT.name
+            )
             itemModels().basicItem(block.asItem())
         }
 
@@ -82,41 +97,41 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
     }
 
     private fun genLogs() {
-        BlockSetup.DEAD_OAK_LOG.get().let { log ->
-            logBlock(log)
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.DEAD_OAK_LOG.get().let { block ->
+            logBlock(block)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
-        BlockSetup.CHARRED_DEAD_OAK_LOG.get().let { log ->
-            logBlock(log)
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.CHARRED_DEAD_OAK_LOG.get().let { block ->
+            logBlock(block)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
-        BlockSetup.STRIPPED_DEAD_OAK_LOG.get().let { log ->
-            logBlock(log)
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.STRIPPED_DEAD_OAK_LOG.get().let { block ->
+            logBlock(block)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
-        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get().let { log ->
-            logBlock(log)
-            simpleBlockItem(log, models().getExistingFile(key(log)))
-        }
-
-        BlockSetup.DEAD_OAK_WOOD.get().let { log ->
-            axisBlock(log, blockTexture(log), blockTexture(log))
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get().let { block ->
+            logBlock(block)
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
 
-        BlockSetup.STRIPPED_DEAD_OAK_WOOD.get().let { log ->
-            axisBlock(log, blockTexture(log), blockTexture(log))
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.DEAD_OAK_WOOD.get().let { block ->
+            axisBlock(block, blockTexture(block), blockTexture(block))
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
 
-        BlockSetup.CHARRED_DEAD_OAK_WOOD.get().let { log ->
-            axisBlock(log, blockTexture(log), blockTexture(log))
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.STRIPPED_DEAD_OAK_WOOD.get().let { block ->
+            axisBlock(block, blockTexture(block), blockTexture(block))
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
 
-        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get().let { log ->
-            axisBlock(log, blockTexture(log), blockTexture(log))
-            simpleBlockItem(log, models().getExistingFile(key(log)))
+        BlockSetup.CHARRED_DEAD_OAK_WOOD.get().let { block ->
+            axisBlock(block, blockTexture(block), blockTexture(block))
+            simpleBlockItem(block, models().getExistingFile(key(block)))
+        }
+
+        BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get().let { block ->
+            axisBlock(block, blockTexture(block), blockTexture(block))
+            simpleBlockItem(block, models().getExistingFile(key(block)))
         }
     }
 
@@ -134,6 +149,13 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
         if (withItem) {
             simpleBlockItem(block, model)
         }
+    }
+
+    private fun generatedBlockItem(block: Block): ItemModelBuilder {
+        return itemModels().getBuilder(name(block))
+            .parent(UncheckedModelFile("item/generated"))
+            .texture("layer0", blockTexture(block))
+
     }
 
     private fun key(block: Block): ResourceLocation {

@@ -7,14 +7,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.BiasedToBottomInt
-import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.util.valueproviders.UniformInt
-import net.minecraft.world.level.levelgen.placement.BiomeFilter
-import net.minecraft.world.level.levelgen.placement.CountPlacement
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.RarityFilter
-import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator
+import net.minecraft.world.level.levelgen.placement.*
 
 object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
     override fun run(context: BootstrapContext<PlacedFeature>) {
@@ -22,6 +15,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
 
         val deadWoodFeature = features.getOrThrow(ConfiguredFeatureSetup.DEAD_OAK_TREE)
         val slateBoulderFeature = features.getOrThrow(ConfiguredFeatureSetup.SLATE_BOULDER)
+        val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DRIED_GRASS)
+        val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SINGLE_DRIED_GRASS)
 
         context.register(
             PlacedFeatureSetup.DEAD_OAK_TREE, PlacedFeature(
@@ -44,6 +39,21 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
                     BiomeFilter.biome()
                 )
             )
+        )
+
+        context.register(
+            PlacedFeatureSetup.DRIED_GRASS_PATCH, PlacedFeature(
+                driedGrass, listOf(
+                    NoiseThresholdCountPlacement.of(-0.8, 5, 10),
+                    InSquarePlacement.spread(),
+                    PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+                    BiomeFilter.biome()
+                )
+            )
+        )
+
+        context.register(
+            PlacedFeatureSetup.DRIED_GRASS_BONEMEAL, PlacedFeature(singleDriedGrass, listOf(PlacementUtils.isEmpty()))
         )
     }
 }
