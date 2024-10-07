@@ -14,22 +14,52 @@ object SurfaceRuleSetup {
     private val STONE = makeStateRule(Blocks.STONE)
     private val DRIED_DIRT = makeStateRule(BlockSetup.DRIED_DIRT.get())
 
-    private val COARSE_DIRT = makeStateRule(Blocks.COARSE_DIRT)
-    private val GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK)
-    private val BLUE_TERRACOTTA = makeStateRule(Blocks.BLUE_TERRACOTTA)
-
     fun makeRules(): RuleSource {
         return SurfaceRules.sequence(
             SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.WASTELANDS), wastelandRules()),
         )
     }
 
-    private fun wastelandRules() : RuleSource {
+    private fun wastelandRules(): RuleSource {
         val isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0)
-        val surface = SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(0, false, 4, CaveSurface.FLOOR), DRIED_DIRT)
+        val surfaceDriedDirt = SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DRIED_DIRT)
+        val stoneUnderDriedDirt = SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), STONE)
+
+        val grass = SurfaceRules.ifTrue(
+            SurfaceRules.abovePreliminarySurface(), SurfaceRules.ifTrue(
+                SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(
+                    SurfaceRules.waterBlockCheck(-1, 0), SurfaceRules.sequence(
+                        DRIED_DIRT
+                    )
+                )
+            )
+        )
+
+        val dirt = SurfaceRules.ifTrue(
+            SurfaceRules.waterStartCheck(-6, -1),
+            SurfaceRules.ifTrue(
+                SurfaceRules.UNDER_FLOOR, DRIED_DIRT
+            )
+        )
+
+        val underDirt = SurfaceRules.sequence(
+            SurfaceRules.ifTrue(
+                SurfaceRules.ON_FLOOR,
+                SurfaceRules.ifTrue(
+                    SurfaceRules.waterBlockCheck(-1, 0),
+                    SurfaceRules.sequence(
+                        grass
+                    )
+                )
+            ),
+            dirt
+        )
+
         return SurfaceRules.sequence(
-            surface,
-            STONE
+            SurfaceRules.ifTrue(
+                SurfaceRules.abovePreliminarySurface(),
+                SurfaceRules.sequence(surfaceDriedDirt, STONE)
+            )
         )
     }
 

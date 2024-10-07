@@ -5,6 +5,7 @@ import dev.quarris.wastelands.datagen.client.BlockStateGen
 import dev.quarris.wastelands.datagen.client.EnUsLangGen
 import dev.quarris.wastelands.datagen.server.*
 import dev.quarris.wastelands.datagen.server.loot.BlockLootProvider
+import dev.quarris.wastelands.datagen.server.tags.BiomeTagGen
 import dev.quarris.wastelands.datagen.server.tags.BlockTagGen
 import dev.quarris.wastelands.datagen.server.tags.ItemTagGen
 import net.minecraft.core.RegistrySetBuilder
@@ -37,8 +38,20 @@ object Datagen {
         generator.addProvider(isClient, ::EnUsLangGen)
 
         // Server
+
+        // Datapack Registries
         generator.addProvider(isServer, DataProvider.Factory { output ->
-            RecipesGen(output, lookupProvider)
+            DatapackBuiltinEntriesProvider(
+                output,
+                lookupProvider,
+                RegistrySetBuilder()
+                    .add(Registries.BIOME, BiomeGen)
+                    .add(Registries.WORLD_PRESET, WorldPresetGen)
+                    .add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureGen)
+                    .add(Registries.PLACED_FEATURE, PlacedFeatureGen)
+                    .add(Registries.NOISE_SETTINGS, NoiseGeneratorGen),
+                setOf(ModRef.ID)
+            )
         })
 
         // Tags
@@ -47,6 +60,9 @@ object Datagen {
         })
         generator.addProvider(isServer, DataProvider.Factory { output ->
             ItemTagGen(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper)
+        })
+        generator.addProvider(isServer, DataProvider.Factory { output ->
+            BiomeTagGen(output, lookupProvider, existingFileHelper)
         })
 
         // Loottables
@@ -64,18 +80,9 @@ object Datagen {
             )
         })
 
-        // Datapack Registries
+        // Recipes
         generator.addProvider(isServer, DataProvider.Factory { output ->
-            DatapackBuiltinEntriesProvider(
-                output,
-                lookupProvider,
-                RegistrySetBuilder()
-                    .add(Registries.BIOME, BiomeGen)
-                    .add(Registries.WORLD_PRESET, WorldPresetGen)
-                    .add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureGen)
-                    .add(Registries.PLACED_FEATURE, PlacedFeatureGen),
-                setOf(ModRef.ID)
-            )
+            RecipesGen(output, lookupProvider)
         })
     }
 }

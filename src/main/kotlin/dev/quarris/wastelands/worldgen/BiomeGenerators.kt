@@ -1,9 +1,10 @@
 package dev.quarris.wastelands.worldgen
 
+import dev.quarris.wastelands.setup.OrePlacementSetup
 import dev.quarris.wastelands.setup.PlacedFeatureSetup
 import net.minecraft.core.HolderGetter
 import net.minecraft.data.worldgen.BiomeDefaultFeatures
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements
+import net.minecraft.data.worldgen.placement.CavePlacements
 import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
@@ -21,33 +22,27 @@ object BiomeGenerators {
         placedFeatures: HolderGetter<PlacedFeature>,
         worldCarvers: HolderGetter<ConfiguredWorldCarver<*>>
     ): Biome {
+        // Mob Settings
         val mobSettings = MobSpawnSettings.Builder()
-            .build()
+        BiomeDefaultFeatures.monsters(mobSettings, 20, 2, 9, false)
+
+        // Features
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
-            .addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE)
+
+        generationSettings
             .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE)
             .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SLATE_BOULDER)
-            .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_WATER)
-            .addFeature(GenerationStep.Decoration.FLUID_SPRINGS, MiscOverworldPlacements.SPRING_LAVA)
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DRIED_GRASS_PATCH)
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DEAD_OAK_TREE)
 
-        BiomeDefaultFeatures.addDefaultOres(generationSettings)
-
-        //BiomeDefaultFeatures.addDefaultMushrooms(generationSettings)
-        //generationSettings.addFeature(
-        //    GenerationStep.Decoration.UNDERGROUND_DECORATION,
-        //    NetherPlacements.SPRING_OPEN
-        //)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, NetherPlacements.PATCH_FIRE)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, NetherPlacements.PATCH_SOUL_FIRE)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, NetherPlacements.GLOWSTONE_EXTRA)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, NetherPlacements.GLOWSTONE)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, VegetationPlacements.BROWN_MUSHROOM_NETHER)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, VegetationPlacements.RED_MUSHROOM_NETHER)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, OrePlacements.ORE_MAGMA)
-        //.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, NetherPlacements.SPRING_CLOSED)
-        //BiomeDefaultFeatures.addNetherDefaultOres(generationSettings)
+        addWastelandOres(generationSettings)
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
+        BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
+        addUndergroundVariety(generationSettings)
+        BiomeDefaultFeatures.addDefaultSprings(generationSettings)
+        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
+        BiomeDefaultFeatures.addDripstone(generationSettings)
+        BiomeDefaultFeatures.addFossilDecoration(generationSettings)
 
         return Biome.BiomeBuilder()
             .hasPrecipitation(true)
@@ -60,6 +55,7 @@ object BiomeGenerators {
                     .fogColor(0x696754)
                     .skyColor(0x5e5d4b)
                     .grassColorOverride(0x85a322)
+                    .foliageColorOverride(0x85a322)
                     //.ambientLoopSound(SoundEvents.AMBIENT_NETHER_WASTES_LOOP)
                     //.ambientMoodSound(AmbientMoodSettings(SoundEvents.AMBIENT_NETHER_WASTES_MOOD, 6000, 8, 2.0))
                     //.ambientAdditionsSound(
@@ -71,9 +67,29 @@ object BiomeGenerators {
                     .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP))
                     .build()
             )
-            .mobSpawnSettings(mobSettings)
+            .mobSpawnSettings(mobSettings.build())
             .generationSettings(generationSettings.build())
             .build()
+    }
+
+    // Adds all ores present in wasteland biome
+    private fun addWastelandOres(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.COAL_VEIN_LOWER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.COAL_VEIN_UPPER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.LARGE_COAL_VEIN)
+    }
+
+    // Adds the default variety excluding dirt
+    private fun addUndergroundVariety(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRAVEL)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRANITE_UPPER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRANITE_LOWER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_DIORITE_UPPER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_DIORITE_LOWER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_ANDESITE_UPPER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_ANDESITE_LOWER)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_TUFF)
+        builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, CavePlacements.GLOW_LICHEN)
     }
 
 }

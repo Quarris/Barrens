@@ -2,6 +2,7 @@ package dev.quarris.wastelands.datagen.server
 
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BiomeSetup
+import dev.quarris.wastelands.setup.NoiseGeneratorSetup
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
@@ -31,7 +32,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
         val dimensionTypes: HolderGetter<DimensionType> = context.lookup(Registries.DIMENSION_TYPE)
         val biomes = context.lookup(Registries.BIOME)
         val noiseSettings = context.lookup(Registries.NOISE_SETTINGS)
-        val genSettings: Holder<NoiseGeneratorSettings> = noiseSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD)
+        val wastelandSettings: Holder<NoiseGeneratorSettings> = noiseSettings.getOrThrow(NoiseGeneratorSetup.WASTELANDS)
 
         netherStem = LevelStem(
             dimensionTypes.getOrThrow(BuiltinDimensionTypes.NETHER),
@@ -108,7 +109,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
             NoiseBasedChunkGenerator(
                 MultiNoiseBiomeSource.createFromList(
                     Climate.ParameterList(parameterList)
-                ), genSettings
+                ), wastelandSettings
             )
         )
 

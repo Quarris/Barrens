@@ -6,6 +6,8 @@ import dev.quarris.wastelands.setup.BiomeSetup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Climate
+import net.minecraft.world.level.biome.Climate.Parameter
 import net.minecraft.world.level.biome.Climate.ParameterPoint
 import terrablender.api.ParameterUtils
 import terrablender.api.ParameterUtils.Continentalness
@@ -24,7 +26,7 @@ import java.util.function.Consumer
 class WastelandsRegion : Region(
     ModRef.res("wastelands"),
     RegionType.OVERWORLD,
-    7
+    1
 ) {
 
     override fun addBiomes(
@@ -35,10 +37,15 @@ class WastelandsRegion : Region(
         ParameterPointListBuilder()
             .temperature(Temperature.HOT, Temperature.FROZEN)
             .humidity(Humidity.ARID)
-            .continentalness(Continentalness.span(Continentalness.NEAR_INLAND, Continentalness.MID_INLAND))
-            .erosion(Erosion.span(Erosion.EROSION_0, Erosion.EROSION_3))
-            .depth(Depth.SURFACE)
-            .weirdness(Weirdness.LOW_SLICE_VARIANT_ASCENDING, Weirdness.LOW_SLICE_NORMAL_DESCENDING)
+            .continentalness(Continentalness.span(Continentalness.MID_INLAND, Continentalness.FAR_INLAND))
+            .erosion(Erosion.span(Erosion.EROSION_4, Erosion.EROSION_6))
+            .depth(Depth.FULL_RANGE)
+            .weirdness(
+                Weirdness.MID_SLICE_NORMAL_ASCENDING,
+                Weirdness.MID_SLICE_NORMAL_DESCENDING,
+                Weirdness.MID_SLICE_VARIANT_ASCENDING,
+                Weirdness.MID_SLICE_VARIANT_DESCENDING
+            )
             .build().forEach(Consumer { point: ParameterPoint ->
                 builder.add(
                     point,
