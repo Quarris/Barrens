@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.SurfaceRules
 import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource
-import net.minecraft.world.level.levelgen.placement.CaveSurface
 
 
 object SurfaceRuleSetup {
@@ -16,7 +15,7 @@ object SurfaceRuleSetup {
 
     fun makeRules(): RuleSource {
         return SurfaceRules.sequence(
-            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.WASTELANDS), wastelandRules()),
+            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.WASTELAND), wastelandRules()),
         )
     }
 

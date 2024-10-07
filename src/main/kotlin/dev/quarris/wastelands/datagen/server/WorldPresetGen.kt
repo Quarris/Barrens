@@ -3,6 +3,7 @@ package dev.quarris.wastelands.datagen.server
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BiomeSetup
 import dev.quarris.wastelands.setup.NoiseGeneratorSetup
+import dev.quarris.wastelands.setup.WorldPresetSetup
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
@@ -84,7 +85,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
             wastelandsPoints.map { point: ParameterPoint ->
                 DataPair.of<ParameterPoint, Holder<Biome>>(
                     point,
-                    biomes.getOrThrow(BiomeSetup.WASTELANDS)
+                    biomes.getOrThrow(BiomeSetup.WASTELAND)
                 )
             }.plus(
                 oceanPoints.map { point: ParameterPoint ->
@@ -114,7 +115,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
         )
 
         context.register(
-            ResourceKey.create(Registries.WORLD_PRESET, ModRef.res("wastelands")),
+            WorldPresetSetup.WASTELANDS,
             WorldPreset(
                 mapOf(
                     Pair(LevelStem.OVERWORLD, wastelandsStem),

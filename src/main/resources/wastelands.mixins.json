@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_21",
+  "package": "dev.quarris.wastelands.mixins",
+  "refmap": "wastelands.refmap.json",
+  "mixins": [
+
+  ],
+  "client": [
+    "CreateWorldScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -6,10 +6,7 @@ import dev.quarris.wastelands.setup.BiomeSetup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biome
-import net.minecraft.world.level.biome.Climate
-import net.minecraft.world.level.biome.Climate.Parameter
 import net.minecraft.world.level.biome.Climate.ParameterPoint
-import terrablender.api.ParameterUtils
 import terrablender.api.ParameterUtils.Continentalness
 import terrablender.api.ParameterUtils.Depth
 import terrablender.api.ParameterUtils.Erosion
@@ -49,7 +46,7 @@ class WastelandsRegion : Region(
             .build().forEach(Consumer { point: ParameterPoint ->
                 builder.add(
                     point,
-                    BiomeSetup.WASTELANDS
+                    BiomeSetup.WASTELAND
                 )
             })
 

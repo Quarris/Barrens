@@ -72,6 +72,8 @@ object BiomeGenerators {
             .build()
     }
 
+
+
     // Adds all ores present in wasteland biome
     private fun addWastelandOres(builder: BiomeGenerationSettings.Builder) {
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.COAL_VEIN_LOWER)

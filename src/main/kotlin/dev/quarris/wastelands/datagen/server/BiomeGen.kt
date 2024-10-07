@@ -10,7 +10,7 @@ import net.minecraft.world.level.biome.Biome
 object BiomeGen : RegistryBootstrap<Biome> {
     override fun run(context: BootstrapContext<Biome>) {
         context.register(
-            BiomeSetup.WASTELANDS, BiomeGenerators.wasteland(
+            BiomeSetup.WASTELAND, BiomeGenerators.wasteland(
                 context.lookup(Registries.PLACED_FEATURE),
                 context.lookup(Registries.CONFIGURED_CARVER)
             )
