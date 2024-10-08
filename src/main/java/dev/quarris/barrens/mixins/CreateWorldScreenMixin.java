@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CreateWorldScreen.class)
 public class CreateWorldScreenMixin {
 
-    @Inject(method = "openFresh(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;)V", at = @At(value = "RETURN"))
+    @Inject(method = "openFresh", at = @At(value = "RETURN"))
     private static void defaultWastelandWorldPreset(Minecraft minecraft, Screen lastScreen, CallbackInfo ci) {
         if (!BarrensConfigs.INSTANCE.getUseBarrensDefaultPreset()) {
             return;

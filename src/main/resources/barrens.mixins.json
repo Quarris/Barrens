@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "package": "dev.quarris.barrens.mixins",
-  "refmap": "wastelands.refmap.json",
+  "refmap": "barrens.refmap.json",
   "mixins": [
     "BoneMealItemMixin"
   ],
