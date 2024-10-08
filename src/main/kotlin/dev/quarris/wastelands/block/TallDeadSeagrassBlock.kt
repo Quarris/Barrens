@@ -31,7 +31,7 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
     }
 
     override fun getCloneItemStack(state: BlockState, hit: HitResult, level: LevelReader, pos: BlockPos, player: Player): ItemStack {
-        return ItemStack(BlockSetup.DEAD_SEAGRASS)
+        return ItemStack(BlockSetup.DeadSeagrass)
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
@@ -47,9 +47,9 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
     }
 
     override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
-        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+        if (state.getValue(Half) == DoubleBlockHalf.UPPER) {
             val blockstate = level.getBlockState(pos.below())
-            return blockstate.`is`(this) && blockstate.getValue(HALF) == DoubleBlockHalf.LOWER
+            return blockstate.`is`(this) && blockstate.getValue(Half) == DoubleBlockHalf.LOWER
         } else {
             val fluidstate = level.getFluidState(pos)
             return super.canSurvive(state, level, pos) && fluidstate.`is`(FluidTags.WATER) && fluidstate.amount == 8
@@ -61,7 +61,7 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-        return SHAPE
+        return Shape
     }
 
     override fun canPlaceLiquid(player: Player?, level: BlockGetter, pos: BlockPos, state: BlockState, fluid: Fluid): Boolean {
@@ -73,13 +73,13 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
     }
 
     override fun codec(): MapCodec<TallDeadSeagrassBlock> {
-        return CODEC
+        return Codec
     }
 
     companion object {
-        val CODEC: MapCodec<TallDeadSeagrassBlock> = simpleCodec(::TallDeadSeagrassBlock)
-        val HALF: EnumProperty<DoubleBlockHalf> = DoublePlantBlock.HALF
-        val SHAPE: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
+        val Codec: MapCodec<TallDeadSeagrassBlock> = simpleCodec(::TallDeadSeagrassBlock)
+        val Half: EnumProperty<DoubleBlockHalf> = HALF
+        val Shape: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
     }
 
 }

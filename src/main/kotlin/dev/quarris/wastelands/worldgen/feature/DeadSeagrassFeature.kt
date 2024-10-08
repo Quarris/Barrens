@@ -27,9 +27,9 @@ class DeadSeagrassFeature(codec: Codec<ProbabilityFeatureConfiguration>) :
             val spawnTall = random.nextDouble() < config.probability.toDouble()
             val toSpawn =
                 if (spawnTall)
-                    BlockSetup.TALL_DEAD_SEAGRASS.get().defaultBlockState()
+                    BlockSetup.TallDeadSeagrass.get().defaultBlockState()
                 else
-                    BlockSetup.DEAD_SEAGRASS.get().defaultBlockState()
+                    BlockSetup.DeadSeagrass.get().defaultBlockState()
 
             if (toSpawn.canSurvive(level, placementPos)) {
                 if (spawnTall) {

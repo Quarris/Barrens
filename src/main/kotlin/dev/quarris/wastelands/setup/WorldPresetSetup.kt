@@ -6,5 +6,5 @@ import net.minecraft.resources.ResourceKey
 
 object WorldPresetSetup {
 
-    val WASTELANDS = ResourceKey.create(Registries.WORLD_PRESET, ModRef.res("wastelands"))
+    val Wastelands = ResourceKey.create(Registries.WORLD_PRESET, ModRef.res("wastelands"))
 }

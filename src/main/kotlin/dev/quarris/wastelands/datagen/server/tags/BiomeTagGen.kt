@@ -18,14 +18,14 @@ class BiomeTagGen(
 ) : BiomeTagsProvider (output, lookupProvider, ModRef.ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         this.tag(BiomeTags.HAS_SHIPWRECK)
-            .addOptional(BiomeSetup.DEAD_OCEAN.location())
+            .addOptional(BiomeSetup.DeadOcean.location())
 
         arrayOf(
             BiomeTags.HAS_SHIPWRECK,
             BiomeTags.HAS_OCEAN_RUIN_COLD
         ).forEach { tag ->
             this.tag(tag)
-                .addOptional(BiomeSetup.DEAD_OCEAN.location())
+                .addOptional(BiomeSetup.DeadOcean.location())
         }
 
         arrayOf(
@@ -38,8 +38,8 @@ class BiomeTagGen(
             TagSetup.Biomes.IsDead
         ).forEach { tag ->
             this.tag(tag)
-                .addOptional(BiomeSetup.DEAD_OCEAN.location())
-                .addOptional(BiomeSetup.WASTELAND.location())
+                .addOptional(BiomeSetup.DeadOcean.location())
+                .addOptional(BiomeSetup.Wasteland.location())
         }
     }
 }

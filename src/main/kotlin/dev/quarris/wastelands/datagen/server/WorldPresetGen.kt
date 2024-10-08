@@ -1,6 +1,5 @@
 package dev.quarris.wastelands.datagen.server
 
-import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BiomeSetup
 import dev.quarris.wastelands.setup.NoiseGeneratorSetup
 import dev.quarris.wastelands.setup.WorldPresetSetup
@@ -9,7 +8,6 @@ import net.minecraft.core.HolderGetter
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.Climate.ParameterPoint
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
@@ -33,7 +31,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
         val dimensionTypes: HolderGetter<DimensionType> = context.lookup(Registries.DIMENSION_TYPE)
         val biomes = context.lookup(Registries.BIOME)
         val noiseSettings = context.lookup(Registries.NOISE_SETTINGS)
-        val wastelandSettings: Holder<NoiseGeneratorSettings> = noiseSettings.getOrThrow(NoiseGeneratorSetup.WASTELANDS)
+        val wastelandSettings: Holder<NoiseGeneratorSettings> = noiseSettings.getOrThrow(NoiseGeneratorSetup.Wastelands)
 
         netherStem = LevelStem(
             dimensionTypes.getOrThrow(BuiltinDimensionTypes.NETHER),
@@ -76,13 +74,13 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
             wastelandsPoints.map { point: ParameterPoint ->
                 DataPair.of<ParameterPoint, Holder<Biome>>(
                     point,
-                    biomes.getOrThrow(BiomeSetup.WASTELAND)
+                    biomes.getOrThrow(BiomeSetup.Wasteland)
                 )
             }.plus(
                 oceanPoints.map { point: ParameterPoint ->
                     DataPair.of<ParameterPoint, Holder<Biome>>(
                         point,
-                        biomes.getOrThrow(BiomeSetup.DEAD_OCEAN)
+                        biomes.getOrThrow(BiomeSetup.DeadOcean)
                     )
                 }
             ).toList()
@@ -99,7 +97,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
         )
 
         context.register(
-            WorldPresetSetup.WASTELANDS,
+            WorldPresetSetup.Wastelands,
             WorldPreset(
                 mapOf(
                     Pair(LevelStem.OVERWORLD, wastelandsStem),

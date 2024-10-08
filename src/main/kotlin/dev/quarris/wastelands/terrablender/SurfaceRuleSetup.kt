@@ -10,55 +10,23 @@ import net.minecraft.world.level.levelgen.SurfaceRules.RuleSource
 
 object SurfaceRuleSetup {
 
-    private val STONE = makeStateRule(Blocks.STONE)
-    private val DRIED_DIRT = makeStateRule(BlockSetup.DRIED_DIRT.get())
+    private val StoneState = makeStateRule(Blocks.STONE)
+    private val DriedDirtState = makeStateRule(BlockSetup.DriedDirt.get())
 
     fun makeRules(): RuleSource {
         return SurfaceRules.sequence(
-            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.WASTELAND), wastelandRules()),
-            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.DEAD_OCEAN), wastelandRules()),
+            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.Wasteland), wastelandRules()),
+            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.DeadOcean), wastelandRules()),
         )
     }
 
     private fun wastelandRules(): RuleSource {
-        val isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0)
-        val surfaceDriedDirt = SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DRIED_DIRT)
-        val stoneUnderDriedDirt = SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), STONE)
-
-        val grass = SurfaceRules.ifTrue(
-            SurfaceRules.abovePreliminarySurface(), SurfaceRules.ifTrue(
-                SurfaceRules.ON_FLOOR, SurfaceRules.ifTrue(
-                    SurfaceRules.waterBlockCheck(-1, 0), SurfaceRules.sequence(
-                        DRIED_DIRT
-                    )
-                )
-            )
-        )
-
-        val dirt = SurfaceRules.ifTrue(
-            SurfaceRules.waterStartCheck(-6, -1),
-            SurfaceRules.ifTrue(
-                SurfaceRules.UNDER_FLOOR, DRIED_DIRT
-            )
-        )
-
-        val underDirt = SurfaceRules.sequence(
-            SurfaceRules.ifTrue(
-                SurfaceRules.ON_FLOOR,
-                SurfaceRules.ifTrue(
-                    SurfaceRules.waterBlockCheck(-1, 0),
-                    SurfaceRules.sequence(
-                        grass
-                    )
-                )
-            ),
-            dirt
-        )
+        val surfaceDriedDirt = SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DriedDirtState)
 
         return SurfaceRules.sequence(
             SurfaceRules.ifTrue(
                 SurfaceRules.abovePreliminarySurface(),
-                SurfaceRules.sequence(surfaceDriedDirt, STONE)
+                SurfaceRules.sequence(surfaceDriedDirt, StoneState)
             )
         )
     }

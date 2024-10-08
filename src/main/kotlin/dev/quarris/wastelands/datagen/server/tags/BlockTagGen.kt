@@ -22,57 +22,57 @@ class BlockTagGen(
     }
 
     private fun miscTags() {
-        tag(TagSetup.Blocks.DEAD_OAK_LOGS).add(
-            BlockSetup.DEAD_OAK_WOOD.get(),
-            BlockSetup.STRIPPED_DEAD_OAK_LOG.get(),
-            BlockSetup.STRIPPED_DEAD_OAK_WOOD.get(),
-            BlockSetup.CHARRED_DEAD_OAK_LOG.get(),
-            BlockSetup.CHARRED_DEAD_OAK_WOOD.get(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get()
+        tag(TagSetup.Blocks.DeadOakLogs).add(
+            BlockSetup.DeadOakWood.get(),
+            BlockSetup.StrippedDeakOakLog.get(),
+            BlockSetup.StrippedDeadOakWood.get(),
+            BlockSetup.CharredDeadOakLog.get(),
+            BlockSetup.CharredDeadOakWood.get(),
+            BlockSetup.StrippedCharredDeadOakLog.get(),
+            BlockSetup.StrippedCharredDeadOakWood.get()
         )
 
         tag(BlockTags.LOGS_THAT_BURN).add(
-            BlockSetup.DEAD_OAK_LOG.get(),
-            BlockSetup.DEAD_OAK_WOOD.get(),
-            BlockSetup.STRIPPED_DEAD_OAK_LOG.get(),
-            BlockSetup.STRIPPED_DEAD_OAK_WOOD.get(),
-            BlockSetup.CHARRED_DEAD_OAK_LOG.get(),
-            BlockSetup.CHARRED_DEAD_OAK_WOOD.get(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get()
+            BlockSetup.DeadOakLog.get(),
+            BlockSetup.DeadOakWood.get(),
+            BlockSetup.StrippedDeakOakLog.get(),
+            BlockSetup.StrippedDeadOakWood.get(),
+            BlockSetup.CharredDeadOakLog.get(),
+            BlockSetup.CharredDeadOakWood.get(),
+            BlockSetup.StrippedCharredDeadOakLog.get(),
+            BlockSetup.StrippedCharredDeadOakWood.get()
         )
 
-        tag(BlockTags.PLANKS).add(BlockSetup.DEAD_OAK_PLANKS.get())
-        tag(BlockTags.WOODEN_SLABS).add(BlockSetup.DEAD_OAK_SLAB.get())
-        tag(BlockTags.WOODEN_STAIRS).add(BlockSetup.DEAD_OAK_STAIRS.get())
-        tag(BlockTags.WOODEN_FENCES).add(BlockSetup.DEAD_OAK_FENCE.get())
-        tag(BlockTags.WOODEN_BUTTONS).add(BlockSetup.DEAD_OAK_BUTTON.get())
-        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(BlockSetup.DEAD_OAK_PRESSURE_PLATE.get())
-        tag(BlockTags.WOODEN_DOORS).add(BlockSetup.DEAD_OAK_DOOR.get())
-        tag(BlockTags.WOODEN_TRAPDOORS).add(BlockSetup.DEAD_OAK_TRAPDOOR.get())
+        tag(BlockTags.PLANKS).add(BlockSetup.DeadOakPlanks.get())
+        tag(BlockTags.WOODEN_SLABS).add(BlockSetup.DeadOakSlab.get())
+        tag(BlockTags.WOODEN_STAIRS).add(BlockSetup.DeadOakStairs.get())
+        tag(BlockTags.WOODEN_FENCES).add(BlockSetup.DeadOakFence.get())
+        tag(BlockTags.WOODEN_BUTTONS).add(BlockSetup.DeadOakButton.get())
+        tag(BlockTags.WOODEN_PRESSURE_PLATES).add(BlockSetup.DeadOakPressurePlate.get())
+        tag(BlockTags.WOODEN_DOORS).add(BlockSetup.DeadOakDoor.get())
+        tag(BlockTags.WOODEN_TRAPDOORS).add(BlockSetup.DeadOakTrapdoor.get())
     }
 
     private fun miningTags() {
         tag(BlockTags.MINEABLE_WITH_AXE)
-            .addTag(TagSetup.Blocks.DEAD_OAK_LOGS)
+            .addTag(TagSetup.Blocks.DeadOakLogs)
             .add(
-                BlockSetup.DEAD_OAK_PLANKS.get(),
-                BlockSetup.DEAD_OAK_SLAB.get(),
-                BlockSetup.DEAD_OAK_STAIRS.get(),
-                BlockSetup.DEAD_OAK_FENCE.get(),
-                BlockSetup.DEAD_OAK_BUTTON.get(),
-                BlockSetup.DEAD_OAK_PRESSURE_PLATE.get(),
-                BlockSetup.DEAD_OAK_DOOR.get(),
-                BlockSetup.DEAD_OAK_TRAPDOOR.get()
+                BlockSetup.DeadOakPlanks.get(),
+                BlockSetup.DeadOakSlab.get(),
+                BlockSetup.DeadOakStairs.get(),
+                BlockSetup.DeadOakFence.get(),
+                BlockSetup.DeadOakButton.get(),
+                BlockSetup.DeadOakPressurePlate.get(),
+                BlockSetup.DeadOakDoor.get(),
+                BlockSetup.DeadOakTrapdoor.get()
             )
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-            BlockSetup.DRIED_DIRT.get()
+            BlockSetup.DriedDirt.get()
         )
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-            BlockSetup.SLATE.get()
+            BlockSetup.Slate.get()
         )
     }
 }

@@ -7,7 +7,6 @@ import dev.quarris.wastelands.setup.ItemSetup
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
-import net.neoforged.fml.config.ModConfigs
 
 @Mod(ModRef.ID)
 class Wastelands(
@@ -20,7 +19,7 @@ class Wastelands(
         FeatureSetup.init()
         CreativeTabSetup.init()
 
-        modContainer.registerConfig(ModConfig.Type.CLIENT, WastelandsConfigs.SPEC)
+        modContainer.registerConfig(ModConfig.Type.CLIENT, WastelandsConfigs.Spec)
     }
 
 }

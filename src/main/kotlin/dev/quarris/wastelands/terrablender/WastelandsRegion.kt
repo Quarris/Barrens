@@ -46,7 +46,7 @@ class WastelandsRegion : Region(
             .build().forEach(Consumer { point: ParameterPoint ->
                 builder.add(
                     point,
-                    BiomeSetup.WASTELAND
+                    BiomeSetup.Wasteland
                 )
             })
 
@@ -60,7 +60,7 @@ class WastelandsRegion : Region(
             .build().forEach(Consumer { point: ParameterPoint ->
                 builder.add(
                     point,
-                    BiomeSetup.WASTELAND
+                    BiomeSetup.Wasteland
                 )
             })
 

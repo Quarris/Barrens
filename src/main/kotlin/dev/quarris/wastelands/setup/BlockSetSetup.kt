@@ -4,5 +4,5 @@ import net.minecraft.world.level.block.state.properties.BlockSetType
 
 object BlockSetSetup {
 
-    val DEAD_OAK = BlockSetType.register(BlockSetType("dead_oak"))
+    val DeadOak = BlockSetType.register(BlockSetType("dead_oak"))
 }

@@ -19,24 +19,24 @@ class ItemTagGen(
 ) : ItemTagsProvider(output, lookupProvider, blockTags, ModRef.ID, existingFileHelper) {
 
     override fun addTags(provider: HolderLookup.Provider) {
-        tag(TagSetup.Items.DEAD_OAK_LOGS).add(
-            BlockSetup.DEAD_OAK_LOG.asItem(),
-            BlockSetup.DEAD_OAK_WOOD.asItem(),
-            BlockSetup.STRIPPED_DEAD_OAK_LOG.asItem(),
-            BlockSetup.STRIPPED_DEAD_OAK_WOOD.asItem(),
-            BlockSetup.CHARRED_DEAD_OAK_LOG.asItem(),
-            BlockSetup.CHARRED_DEAD_OAK_WOOD.asItem(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.asItem(),
-            BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.asItem(),
+        tag(TagSetup.Items.DeadOakLogs).add(
+            BlockSetup.DeadOakLog.asItem(),
+            BlockSetup.DeadOakWood.asItem(),
+            BlockSetup.StrippedDeakOakLog.asItem(),
+            BlockSetup.StrippedDeadOakWood.asItem(),
+            BlockSetup.CharredDeadOakLog.asItem(),
+            BlockSetup.CharredDeadOakWood.asItem(),
+            BlockSetup.StrippedCharredDeadOakLog.asItem(),
+            BlockSetup.StrippedCharredDeadOakWood.asItem(),
         )
 
-        tag(ItemTags.PLANKS).add(BlockSetup.DEAD_OAK_PLANKS.asItem())
-        tag(ItemTags.WOODEN_SLABS).add(BlockSetup.DEAD_OAK_SLAB.asItem())
-        tag(ItemTags.WOODEN_STAIRS).add(BlockSetup.DEAD_OAK_STAIRS.asItem())
-        tag(ItemTags.WOODEN_FENCES).add(BlockSetup.DEAD_OAK_FENCE.asItem())
-        tag(ItemTags.WOODEN_BUTTONS).add(BlockSetup.DEAD_OAK_BUTTON.asItem())
-        tag(ItemTags.WOODEN_PRESSURE_PLATES).add(BlockSetup.DEAD_OAK_PRESSURE_PLATE.asItem())
-        tag(ItemTags.WOODEN_DOORS).add(BlockSetup.DEAD_OAK_DOOR.asItem())
-        tag(ItemTags.WOODEN_TRAPDOORS).add(BlockSetup.DEAD_OAK_TRAPDOOR.asItem())
+        tag(ItemTags.PLANKS).add(BlockSetup.DeadOakPlanks.asItem())
+        tag(ItemTags.WOODEN_SLABS).add(BlockSetup.DeadOakSlab.asItem())
+        tag(ItemTags.WOODEN_STAIRS).add(BlockSetup.DeadOakStairs.asItem())
+        tag(ItemTags.WOODEN_FENCES).add(BlockSetup.DeadOakFence.asItem())
+        tag(ItemTags.WOODEN_BUTTONS).add(BlockSetup.DeadOakButton.asItem())
+        tag(ItemTags.WOODEN_PRESSURE_PLATES).add(BlockSetup.DeadOakPressurePlate.asItem())
+        tag(ItemTags.WOODEN_DOORS).add(BlockSetup.DeadOakDoor.asItem())
+        tag(ItemTags.WOODEN_TRAPDOORS).add(BlockSetup.DeadOakTrapdoor.asItem())
     }
 }

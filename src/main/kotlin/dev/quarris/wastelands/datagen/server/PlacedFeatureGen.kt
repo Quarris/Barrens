@@ -16,18 +16,18 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
     override fun run(context: BootstrapContext<PlacedFeature>) {
         val features = context.lookup(Registries.CONFIGURED_FEATURE)
 
-        val deadWoodFeature = features.getOrThrow(ConfiguredFeatureSetup.DEAD_OAK_TREE)
-        val slateBoulderFeature = features.getOrThrow(ConfiguredFeatureSetup.SLATE_BOULDER)
-        val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DRIED_GRASS)
-        val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SINGLE_DRIED_GRASS)
-        val waterLake = features.getOrThrow(ConfiguredFeatureSetup.DRIED_DIRT_WATER_LAKE)
-        val deadSeagrassSingle = features.getOrThrow(ConfiguredFeatureSetup.DEAD_SEAGRASS_SINGLE)
-        val deadSeagrass = features.getOrThrow(ConfiguredFeatureSetup.DEAD_SEAGRASS)
+        val deadWoodFeature = features.getOrThrow(ConfiguredFeatureSetup.DeadOakTree)
+        val slateBoulderFeature = features.getOrThrow(ConfiguredFeatureSetup.SlateBoulder)
+        val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DriedGrass)
+        val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SingleDriedGrass)
+        val waterLake = features.getOrThrow(ConfiguredFeatureSetup.DriedDirtWaterLake)
+        val deadSeagrassSingle = features.getOrThrow(ConfiguredFeatureSetup.DeadSeagrassSingle)
+        val deadSeagrass = features.getOrThrow(ConfiguredFeatureSetup.DeadSeagrass)
 
         registerOres(context)
 
         context.register(
-            PlacedFeatureSetup.DEAD_OAK_TREE, PlacedFeature(
+            PlacedFeatureSetup.DeadOakTree, PlacedFeature(
                 deadWoodFeature, listOf(
                     RarityFilter.onAverageOnceEvery(5),
                     CountPlacement.of(BiasedToBottomInt.of(1, 3)),
@@ -38,7 +38,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
             )
         )
         context.register(
-            PlacedFeatureSetup.SLATE_BOULDER, PlacedFeature(
+            PlacedFeatureSetup.SlateBoulder, PlacedFeature(
                 slateBoulderFeature, listOf(
                     RarityFilter.onAverageOnceEvery(14),
                     InSquarePlacement.spread(),
@@ -48,7 +48,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
             )
         )
         context.register(
-            PlacedFeatureSetup.DRIED_GRASS_PATCH, PlacedFeature(
+            PlacedFeatureSetup.DriedGrassPatch, PlacedFeature(
                 driedGrass, listOf(
                     NoiseThresholdCountPlacement.of(-0.8, 5, 10),
                     InSquarePlacement.spread(),
@@ -60,11 +60,11 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
 
         context.register(
-            PlacedFeatureSetup.DRIED_GRASS_BONEMEAL, PlacedFeature(singleDriedGrass, listOf(PlacementUtils.isEmpty()))
+            PlacedFeatureSetup.DriedGrassBonemeal, PlacedFeature(singleDriedGrass, listOf(PlacementUtils.isEmpty()))
         )
 
         context.register(
-            PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE, PlacedFeature(
+            PlacedFeatureSetup.DriedDirtWaterLake, PlacedFeature(
                 waterLake, listOf(
                     RarityFilter.onAverageOnceEvery(20),
                     PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
@@ -74,7 +74,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
 
         context.register(
-            PlacedFeatureSetup.DEAD_SEAGRASS_PATCH, PlacedFeature(
+            PlacedFeatureSetup.DeadSeagrassPatch, PlacedFeature(
                 deadSeagrass, seagrassPlacement(20, 50)
             )
         )
@@ -84,8 +84,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         val features = context.lookup(Registries.CONFIGURED_FEATURE)
 
         context.register(
-            OrePlacementSetup.COAL_VEIN_LOWER, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(
+            OrePlacementSetup.CoalVeinLower, PlacedFeature(
+                features.getOrThrow(OreFeatureSetup.CoalVein), commonOrePlacement(
                     30, HeightRangePlacement.triangle(
                         VerticalAnchor.absolute(-60), VerticalAnchor.absolute(12)
                     )
@@ -94,8 +94,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
 
         context.register(
-            OrePlacementSetup.COAL_VEIN_UPPER, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(
+            OrePlacementSetup.CoalVeinUpper, PlacedFeature(
+                features.getOrThrow(OreFeatureSetup.CoalVein), commonOrePlacement(
                     60, HeightRangePlacement.uniform(
                         VerticalAnchor.absolute(12), VerticalAnchor.top()
                     )
@@ -104,8 +104,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
 
         context.register(
-            OrePlacementSetup.LARGE_COAL_VEIN, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.LARGE_COAL_VEIN), rareOrePlacement(
+            OrePlacementSetup.LargeCoalVein, PlacedFeature(
+                features.getOrThrow(OreFeatureSetup.LargeCoalVein), rareOrePlacement(
                     10, HeightRangePlacement.uniform(
                         VerticalAnchor.absolute(-20), VerticalAnchor.absolute(48)
                     )

@@ -34,7 +34,7 @@ class DeadSeagrassBlock(properties: Properties) : BushBlock(properties), Bonemea
     }
 
     override fun performBonemeal(level: ServerLevel, random: RandomSource, pos: BlockPos, state: BlockState) {
-        val bottom = BlockSetup.TALL_DEAD_SEAGRASS.get().defaultBlockState()
+        val bottom = BlockSetup.TallDeadSeagrass.get().defaultBlockState()
         val top = bottom.setValue(TallSeagrassBlock.HALF, DoubleBlockHalf.UPPER)
         val abovePos = pos.above()
         if (level.getBlockState(abovePos).`is`(Blocks.WATER)) {

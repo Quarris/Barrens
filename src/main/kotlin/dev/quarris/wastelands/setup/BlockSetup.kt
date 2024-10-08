@@ -18,96 +18,96 @@ import java.util.function.Supplier
 
 object BlockSetup {
 
-    val REGISTRY: DeferredRegister.Blocks = DeferredRegister.createBlocks(ModRef.ID)
+    val Registry: DeferredRegister.Blocks = DeferredRegister.createBlocks(ModRef.ID)
 
-    val DRIED_DIRT: DeferredBlock<Block> = registerBlockWithItem(
+    val DriedDirt: DeferredBlock<Block> = registerBlockWithItem(
         "dried_dirt", ::DriedDirtBlock
     ) {
         Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
             .strength(1.2F, 2.0F)
     }
 
-    val DEAD_OAK_LOG: DeferredBlock<RotatedPillarBlock> =
-        registerBlockWithItem("dead_oak_log", { props -> WoodBlock(props, STRIPPED_DEAD_OAK_LOG) }) {
+    val DeadOakLog: DeferredBlock<RotatedPillarBlock> =
+        registerBlockWithItem("dead_oak_log", { props -> WoodBlock(props, StrippedDeakOakLog) }) {
             log(
                 MapColor.COLOR_LIGHT_GRAY, MapColor.COLOR_GRAY
             )
         }
 
-    val DEAD_OAK_WOOD: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
+    val DeadOakWood: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
         "dead_oak_wood",
-        { props -> WoodBlock(props, STRIPPED_DEAD_OAK_WOOD) }) { Properties.ofFullCopy(DEAD_OAK_LOG.get()) }
+        { props -> WoodBlock(props, StrippedDeadOakWood) }) { Properties.ofFullCopy(DeadOakLog.get()) }
 
-    val STRIPPED_DEAD_OAK_LOG: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
+    val StrippedDeakOakLog: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
         "stripped_dead_oak_log", ::RotatedPillarBlock
-    ) { Properties.ofFullCopy(DEAD_OAK_LOG.get()) }
+    ) { Properties.ofFullCopy(DeadOakLog.get()) }
 
-    val STRIPPED_DEAD_OAK_WOOD: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
+    val StrippedDeadOakWood: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
         "stripped_dead_oak_wood", ::RotatedPillarBlock
-    ) { Properties.ofFullCopy(DEAD_OAK_LOG.get()) }
+    ) { Properties.ofFullCopy(DeadOakLog.get()) }
 
-    val CHARRED_DEAD_OAK_LOG: DeferredBlock<RotatedPillarBlock> =
-        registerBlockWithItem("charred_dead_oak_log", { props -> WoodBlock(props, STRIPPED_CHARRED_DEAD_OAK_LOG) }) {
+    val CharredDeadOakLog: DeferredBlock<RotatedPillarBlock> =
+        registerBlockWithItem("charred_dead_oak_log", { props -> WoodBlock(props, StrippedCharredDeadOakLog) }) {
             Properties.ofFullCopy(
-                DEAD_OAK_LOG.get()
+                DeadOakLog.get()
             )
         }
 
-    val CHARRED_DEAD_OAK_WOOD: DeferredBlock<RotatedPillarBlock> =
-        registerBlockWithItem("charred_dead_oak_wood", { props -> WoodBlock(props, STRIPPED_CHARRED_DEAD_OAK_WOOD) }) {
+    val CharredDeadOakWood: DeferredBlock<RotatedPillarBlock> =
+        registerBlockWithItem("charred_dead_oak_wood", { props -> WoodBlock(props, StrippedCharredDeadOakWood) }) {
             Properties.ofFullCopy(
-                DEAD_OAK_LOG.get()
+                DeadOakLog.get()
             )
         }
 
-    val STRIPPED_CHARRED_DEAD_OAK_LOG: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
+    val StrippedCharredDeadOakLog: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
         "stripped_charred_dead_oak_log", ::RotatedPillarBlock
-    ) { Properties.ofFullCopy(DEAD_OAK_LOG.get()) }
+    ) { Properties.ofFullCopy(DeadOakLog.get()) }
 
-    val STRIPPED_CHARRED_DEAD_OAK_WOOD: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
+    val StrippedCharredDeadOakWood: DeferredBlock<RotatedPillarBlock> = registerBlockWithItem(
         "stripped_charred_dead_oak_wood", ::RotatedPillarBlock
-    ) { Properties.ofFullCopy(DEAD_OAK_LOG.get()) }
+    ) { Properties.ofFullCopy(DeadOakLog.get()) }
 
-    val DEAD_OAK_PLANKS: DeferredBlock<Block> = registerBlockWithItem(
+    val DeadOakPlanks: DeferredBlock<Block> = registerBlockWithItem(
         "dead_oak_planks", ::Block
     ) {
         Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASS).strength(1.0F)
             .sound(SoundType.WOOD).ignitedByLava()
     }
 
-    val DEAD_OAK_SLAB: DeferredBlock<SlabBlock> =
-        registerBlockWithItem("dead_oak_slab", ::SlabBlock) { Properties.ofFullCopy(DEAD_OAK_PLANKS.get()) }
+    val DeadOakSlab: DeferredBlock<SlabBlock> =
+        registerBlockWithItem("dead_oak_slab", ::SlabBlock) { Properties.ofFullCopy(DeadOakPlanks.get()) }
 
-    val DEAD_OAK_STAIRS: DeferredBlock<StairBlock> = registerBlockWithItem("dead_oak_stairs",
-        { props -> StairBlock(DEAD_OAK_PLANKS.get().defaultBlockState(), props) },
-        { Properties.ofFullCopy(DEAD_OAK_PLANKS.get()) })
-    val DEAD_OAK_FENCE: DeferredBlock<FenceBlock> = registerBlockWithItem(
+    val DeadOakStairs: DeferredBlock<StairBlock> = registerBlockWithItem("dead_oak_stairs",
+        { props -> StairBlock(DeadOakPlanks.get().defaultBlockState(), props) },
+        { Properties.ofFullCopy(DeadOakPlanks.get()) })
+    val DeadOakFence: DeferredBlock<FenceBlock> = registerBlockWithItem(
         "dead_oak_fence", ::FenceBlock
     ) {
-        Properties.of().mapColor(DEAD_OAK_PLANKS.get().defaultMapColor()).instrument(NoteBlockInstrument.BASS)
+        Properties.of().mapColor(DeadOakPlanks.get().defaultMapColor()).instrument(NoteBlockInstrument.BASS)
             .strength(2.0f, 3.0f).ignitedByLava().sound(SoundType.WOOD)
     }
-    val DEAD_OAK_FENCE_GATE: DeferredBlock<FenceGateBlock> =
-        registerBlockWithItem("dead_oak_fence_gate", { props -> FenceGateBlock(WoodTypeSetup.DEAD_OAK, props) }, {
-            Properties.of().mapColor(DEAD_OAK_PLANKS.get().defaultMapColor()).forceSolidOn()
+    val DeadOakFenceGate: DeferredBlock<FenceGateBlock> =
+        registerBlockWithItem("dead_oak_fence_gate", { props -> FenceGateBlock(WoodTypeSetup.DeadOak, props) }, {
+            Properties.of().mapColor(DeadOakPlanks.get().defaultMapColor()).forceSolidOn()
                 .instrument(NoteBlockInstrument.BASS).strength(1.0F).ignitedByLava()
         })
-    val DEAD_OAK_PRESSURE_PLATE: DeferredBlock<PressurePlateBlock> = registerBlockWithItem("dead_oak_pressure_plate",
-        { props -> PressurePlateBlock(BlockSetSetup.DEAD_OAK, props) },
+    val DeadOakPressurePlate: DeferredBlock<PressurePlateBlock> = registerBlockWithItem("dead_oak_pressure_plate",
+        { props -> PressurePlateBlock(BlockSetSetup.DeadOak, props) },
         {
-            Properties.of().mapColor(DEAD_OAK_PLANKS.get().defaultMapColor()).forceSolidOn()
+            Properties.of().mapColor(DeadOakPlanks.get().defaultMapColor()).forceSolidOn()
                 .instrument(NoteBlockInstrument.BASS).noCollission().strength(0.5f).ignitedByLava()
                 .pushReaction(PushReaction.DESTROY)
         })
-    val DEAD_OAK_BUTTON: DeferredBlock<ButtonBlock> =
-        registerBlockWithItem("dead_oak_button", { props -> ButtonBlock(BlockSetSetup.DEAD_OAK, 30, props) }, {
+    val DeadOakButton: DeferredBlock<ButtonBlock> =
+        registerBlockWithItem("dead_oak_button", { props -> ButtonBlock(BlockSetSetup.DeadOak, 30, props) }, {
             Properties.of().noCollission().strength(0.5f).pushReaction(PushReaction.DESTROY)
         })
 
-    val DEAD_OAK_DOOR: DeferredBlock<DoorBlock> =
-        registerBlockWithItem("dead_oak_door", { props -> DoorBlock(BlockSetSetup.DEAD_OAK, props) }) {
+    val DeadOakDoor: DeferredBlock<DoorBlock> =
+        registerBlockWithItem("dead_oak_door", { props -> DoorBlock(BlockSetSetup.DeadOak, props) }) {
             Properties.of()
-                .mapColor(DEAD_OAK_PLANKS.get().defaultMapColor())
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0F)
                 .noOcclusion()
@@ -115,10 +115,10 @@ object BlockSetup {
                 .pushReaction(PushReaction.DESTROY)
         }
 
-    val DEAD_OAK_TRAPDOOR: DeferredBlock<TrapDoorBlock> =
-        registerBlockWithItem("dead_oak_trapdoor", { props -> TrapDoorBlock(BlockSetSetup.DEAD_OAK, props) }) {
+    val DeadOakTrapdoor: DeferredBlock<TrapDoorBlock> =
+        registerBlockWithItem("dead_oak_trapdoor", { props -> TrapDoorBlock(BlockSetSetup.DeadOak, props) }) {
             Properties.of()
-                .mapColor(DEAD_OAK_PLANKS.get().defaultMapColor())
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
                 .instrument(NoteBlockInstrument.BASS)
                 .strength(2.0f)
                 .noOcclusion()
@@ -126,7 +126,7 @@ object BlockSetup {
                 .ignitedByLava()
         }
 
-    val SLATE: DeferredBlock<Block> =
+    val Slate: DeferredBlock<Block> =
         registerBlockWithItem("slate", ::Block) {
             Properties.of()
                 .mapColor(MapColor.STONE)
@@ -135,7 +135,7 @@ object BlockSetup {
                 .sound(SoundType.GRAVEL)
         }
 
-    val DRIED_SHORT_GRASS: DeferredBlock<DriedShortGrass> =
+    val DriedShortGrass: DeferredBlock<DriedShortGrass> =
         registerBlockWithItem("dried_short_grass", ::DriedShortGrass) {
             Properties.of()
                 .mapColor(MapColor.PLANT)
@@ -148,7 +148,7 @@ object BlockSetup {
                 .pushReaction(PushReaction.DESTROY)
         }
 
-    val DEAD_SEAGRASS: DeferredBlock<DeadSeagrassBlock> =
+    val DeadSeagrass: DeferredBlock<DeadSeagrassBlock> =
         registerBlockWithItem("dead_seagrass", ::DeadSeagrassBlock) {
             Properties.of()
                 .mapColor(MapColor.WATER)
@@ -160,7 +160,7 @@ object BlockSetup {
                 .pushReaction(PushReaction.DESTROY)
         }
 
-    val TALL_DEAD_SEAGRASS: DeferredBlock<TallDeadSeagrassBlock> =
+    val TallDeadSeagrass: DeferredBlock<TallDeadSeagrassBlock> =
         registerBlockWithItem("tall_dead_seagrass", ::TallDeadSeagrassBlock) {
             Properties.of()
                 .mapColor(MapColor.WATER)
@@ -168,20 +168,19 @@ object BlockSetup {
                 .noCollission()
                 .instabreak()
                 .sound(SoundType.WET_GRASS)
-                .offsetType(BlockBehaviour.OffsetType.XYZ)
                 .pushReaction(PushReaction.DESTROY)
         }
 
     private fun <B : Block> registerBlockWithItem(
         name: String, factory: Function<Properties, B>, properties: Supplier<Properties>
     ): DeferredBlock<B> {
-        val block: DeferredBlock<B> = REGISTRY.register(name, Supplier<B> { factory.apply(properties.get()) })
-        ItemSetup.REGISTRY.registerSimpleBlockItem(block)
+        val block: DeferredBlock<B> = Registry.register(name, Supplier<B> { factory.apply(properties.get()) })
+        ItemSetup.Registry.registerSimpleBlockItem(block)
         return block
     }
 
     fun init() {
-        REGISTRY.register(MOD_BUS)
+        Registry.register(MOD_BUS)
     }
 
     private fun log(topMapColor: MapColor, sideMapColor: MapColor): Properties {

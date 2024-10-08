@@ -25,7 +25,7 @@ public class CreateWorldScreenMixin {
         }
 
         for (WorldCreationUiState.WorldTypeEntry worldTypeEntry : screen.getUiState().getNormalPresetList()) {
-            if (worldTypeEntry.preset().is(WorldPresetSetup.INSTANCE.getWASTELANDS())) {
+            if (worldTypeEntry.preset().is(WorldPresetSetup.INSTANCE.getWastelands())) {
                 screen.getUiState().setWorldType(worldTypeEntry);
             }
         }

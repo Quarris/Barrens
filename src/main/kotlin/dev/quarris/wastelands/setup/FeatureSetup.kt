@@ -14,14 +14,14 @@ import java.util.function.Supplier
 
 object FeatureSetup {
 
-    val REGISTRY: DeferredRegister<Feature<*>> = DeferredRegister.create(Registries.FEATURE, ModRef.ID)
+    val Registry: DeferredRegister<Feature<*>> = DeferredRegister.create(Registries.FEATURE, ModRef.ID)
 
-    val DEAD_OAK_TREE = REGISTRY.register("dead_oak_tree", Supplier { DeadOakTreeFeature(ProbabilityFeatureConfiguration.CODEC) })
-    val BOULDER = REGISTRY.register("boulder", Supplier { BoulderFeature(BlockStateConfiguration.CODEC) })
-    val DEAD_SEAGRASS = REGISTRY.register("dead_seagrass", Supplier { DeadSeagrassFeature(ProbabilityFeatureConfiguration.CODEC) })
+    val DeadOakTree = Registry.register("dead_oak_tree", Supplier { DeadOakTreeFeature(ProbabilityFeatureConfiguration.CODEC) })
+    val Boulder = Registry.register("boulder", Supplier { BoulderFeature(BlockStateConfiguration.CODEC) })
+    val DeadSeagrass = Registry.register("dead_seagrass", Supplier { DeadSeagrassFeature(ProbabilityFeatureConfiguration.CODEC) })
 
     fun init() {
-        REGISTRY.register(MOD_BUS)
+        Registry.register(MOD_BUS)
     }
 
 }

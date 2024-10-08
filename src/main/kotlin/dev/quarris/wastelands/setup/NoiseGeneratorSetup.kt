@@ -6,6 +6,6 @@ import net.minecraft.resources.ResourceKey
 
 object NoiseGeneratorSetup {
 
-    val WASTELANDS = ResourceKey.create(Registries.NOISE_SETTINGS, ModRef.res("wastelands"))
+    val Wastelands = ResourceKey.create(Registries.NOISE_SETTINGS, ModRef.res("wastelands"))
 
 }

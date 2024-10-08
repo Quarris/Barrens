@@ -10,7 +10,6 @@ import net.minecraft.sounds.Musics
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.animal.Panda.Gene
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.BiomeGenerationSettings
 import net.minecraft.world.level.biome.BiomeSpecialEffects
@@ -34,10 +33,10 @@ object BiomeGenerators {
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 
         generationSettings
-            .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE)
-            .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SLATE_BOULDER)
-            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DRIED_GRASS_PATCH)
-            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DEAD_OAK_TREE)
+            .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DriedDirtWaterLake)
+            .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SlateBoulder)
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DriedGrassPatch)
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DeadOakTree)
 
         addWastelandOres(generationSettings)
         BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
@@ -96,7 +95,7 @@ object BiomeGenerators {
         BiomeDefaultFeatures.addDefaultSprings(generationSettings)
         BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         BiomeDefaultFeatures.addDripstone(generationSettings)
-        generationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DEAD_SEAGRASS_PATCH)
+        generationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DeadSeagrassPatch)
 
         return Biome.BiomeBuilder()
             .hasPrecipitation(true)
@@ -130,9 +129,9 @@ object BiomeGenerators {
 
     // Adds all ores present in wasteland biome
     private fun addWastelandOres(builder: BiomeGenerationSettings.Builder) {
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.COAL_VEIN_LOWER)
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.COAL_VEIN_UPPER)
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.LARGE_COAL_VEIN)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.CoalVeinLower)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.CoalVeinUpper)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementSetup.LargeCoalVein)
     }
 
     // Adds the default variety excluding dirt

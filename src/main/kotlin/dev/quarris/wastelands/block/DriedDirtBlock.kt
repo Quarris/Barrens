@@ -1,6 +1,5 @@
 package dev.quarris.wastelands.block
 
-import dev.quarris.wastelands.setup.BlockSetup
 import dev.quarris.wastelands.setup.PlacedFeatureSetup
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -28,7 +27,7 @@ class DriedDirtBlock(properties: Properties) : Block(properties), BonemealableBl
         val origin: BlockPos = pos.above()
         val boneMealVegetationFeature: Optional<Holder.Reference<PlacedFeature>> = level.registryAccess()
             .registryOrThrow(Registries.PLACED_FEATURE)
-            .getHolder(PlacedFeatureSetup.DRIED_GRASS_BONEMEAL)
+            .getHolder(PlacedFeatureSetup.DriedGrassBonemeal)
 
         if (boneMealVegetationFeature.isEmpty) return
 

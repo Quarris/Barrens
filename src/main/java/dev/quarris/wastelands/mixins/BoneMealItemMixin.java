@@ -1,7 +1,6 @@
 package dev.quarris.wastelands.mixins;
 
 import dev.quarris.wastelands.block.DeadSeagrassBlock;
-import dev.quarris.wastelands.setup.BiomeSetup;
 import dev.quarris.wastelands.setup.BlockSetup;
 import dev.quarris.wastelands.setup.TagSetup;
 import net.minecraft.core.BlockPos;
@@ -37,7 +36,7 @@ public class BoneMealItemMixin {
         label78:
         for (int i = 0; i < 128; i++) {
             BlockPos placementPos = pos;
-            DeadSeagrassBlock seagrassBlock = BlockSetup.INSTANCE.getDEAD_SEAGRASS().get();
+            DeadSeagrassBlock seagrassBlock = BlockSetup.INSTANCE.getDeadSeagrass().get();
             BlockState toPlace = seagrassBlock.defaultBlockState();
 
             for (int j = 0; j < i / 16; j++) {

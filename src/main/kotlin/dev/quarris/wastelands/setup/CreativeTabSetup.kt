@@ -11,15 +11,15 @@ import java.util.function.Supplier
 
 object CreativeTabSetup {
 
-    val REGISTRY: DeferredRegister<CreativeModeTab> = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModRef.ID)
+    val Registry: DeferredRegister<CreativeModeTab> = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModRef.ID)
 
     init {
-        REGISTRY.register("main", Supplier {
+        Registry.register("main", Supplier {
             CreativeModeTab.builder()
                 .title(Component.translatable(ModRef.key("tab", "main")))
-                .icon { ItemStack(BlockSetup.DRIED_DIRT) }
+                .icon { ItemStack(BlockSetup.DriedDirt) }
                 .displayItems { _, output ->
-                    ItemSetup.REGISTRY.entries.forEach { item ->
+                    ItemSetup.Registry.entries.forEach { item ->
                         output.accept(item.get())
                     }
                 }
@@ -28,7 +28,7 @@ object CreativeTabSetup {
     }
 
     fun init() {
-        REGISTRY.register(MOD_BUS)
+        Registry.register(MOD_BUS)
     }
 
 }

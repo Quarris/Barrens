@@ -11,11 +11,11 @@ import net.minecraft.world.level.biome.Biome
 object TagSetup {
 
     object Blocks {
-        val DEAD_OAK_LOGS = BlockTags.create(ModRef.res("dead_oak_logs"))
+        val DeadOakLogs = BlockTags.create(ModRef.res("dead_oak_logs"))
     }
 
     object Items {
-        val DEAD_OAK_LOGS = ItemTags.create(ModRef.res("dead_oak_logs"))
+        val DeadOakLogs = ItemTags.create(ModRef.res("dead_oak_logs"))
     }
 
     object Biomes {

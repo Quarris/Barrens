@@ -19,7 +19,7 @@ object NoiseGeneratorGen : RegistryBootstrap<NoiseGeneratorSettings> {
         val densityFunctions = context.lookup(Registries.DENSITY_FUNCTION)
         val noiseParams = context.lookup(Registries.NOISE)
         context.register(
-            NoiseGeneratorSetup.WASTELANDS,
+            NoiseGeneratorSetup.Wastelands,
             NoiseGeneratorSettings(
                 WASTELANDS_NOISE_SETTINGS,
                 Blocks.STONE.defaultBlockState(),

@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.DensityFunctions.HolderHolder
 import net.minecraft.world.level.levelgen.OreVeinifier.VeinType
 import net.minecraft.world.level.levelgen.synth.NormalNoise.NoiseParameters
 
+// Don't bother looking in here. It's mostly a copy of NoiseRouterData and is a mystery to me
 object NoiseRouterSetup {
 
     val ZERO = createKey("zero")

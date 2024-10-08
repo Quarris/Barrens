@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger
 
 object ModRef {
     const val ID: String = "wastelands"
-    val LOGGER: Logger = LogManager.getLogger(ID)
+    val Logger: Logger = LogManager.getLogger(ID)
 
     fun res(name: String): ResourceLocation {
         return ResourceLocation.fromNamespaceAndPath(ID, name)

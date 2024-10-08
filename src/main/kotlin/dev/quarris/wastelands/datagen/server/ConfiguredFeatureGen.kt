@@ -27,61 +27,61 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
         registerOres(context)
 
         context.register(
-            ConfiguredFeatureSetup.DEAD_OAK_TREE,
-            ConfiguredFeature(FeatureSetup.DEAD_OAK_TREE.get(), ProbabilityFeatureConfiguration(0.7f))
+            ConfiguredFeatureSetup.DeadOakTree,
+            ConfiguredFeature(FeatureSetup.DeadOakTree.get(), ProbabilityFeatureConfiguration(0.7f))
         )
         context.register(
-            ConfiguredFeatureSetup.SLATE_BOULDER,
+            ConfiguredFeatureSetup.SlateBoulder,
             ConfiguredFeature(
-                FeatureSetup.BOULDER.get(),
-                BlockStateConfiguration(BlockSetup.SLATE.get().defaultBlockState())
+                FeatureSetup.Boulder.get(),
+                BlockStateConfiguration(BlockSetup.Slate.get().defaultBlockState())
             )
         )
         context.register(
-            ConfiguredFeatureSetup.DRIED_GRASS,
+            ConfiguredFeatureSetup.DriedGrass,
             ConfiguredFeature(
                 Feature.RANDOM_PATCH,
                 FeatureUtils.simpleRandomPatchConfiguration(
                     12,
                     PlacementUtils.onlyWhenEmpty<SimpleBlockConfiguration, Feature<SimpleBlockConfiguration>>(
                         Feature.SIMPLE_BLOCK,
-                        SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DRIED_SHORT_GRASS.get()))
+                        SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DriedShortGrass.get()))
                     )
                 )
             )
         )
 
         context.register(
-            ConfiguredFeatureSetup.SINGLE_DRIED_GRASS,
+            ConfiguredFeatureSetup.SingleDriedGrass,
             ConfiguredFeature(
                 Feature.SIMPLE_BLOCK,
-                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DRIED_SHORT_GRASS.get().defaultBlockState()))
+                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DriedShortGrass.get().defaultBlockState()))
             )
         )
 
         context.register(
-            ConfiguredFeatureSetup.DRIED_DIRT_WATER_LAKE,
+            ConfiguredFeatureSetup.DriedDirtWaterLake,
             ConfiguredFeature(
                 Feature.LAKE,
                 LakeFeature.Configuration(
                     BlockStateProvider.simple(Blocks.WATER.defaultBlockState()),
-                    BlockStateProvider.simple(BlockSetup.DRIED_DIRT.get().defaultBlockState())
+                    BlockStateProvider.simple(BlockSetup.DriedDirt.get().defaultBlockState())
                 )
             )
         )
 
         context.register(
-            ConfiguredFeatureSetup.DEAD_SEAGRASS_SINGLE,
+            ConfiguredFeatureSetup.DeadSeagrassSingle,
             ConfiguredFeature(
                 Feature.SIMPLE_BLOCK,
-                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DEAD_SEAGRASS.get()))
+                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DeadSeagrass.get()))
             )
         )
 
         context.register(
-            ConfiguredFeatureSetup.DEAD_SEAGRASS,
+            ConfiguredFeatureSetup.DeadSeagrass,
             ConfiguredFeature(
-                FeatureSetup.DEAD_SEAGRASS.get(),
+                FeatureSetup.DeadSeagrass.get(),
                 ProbabilityFeatureConfiguration(0.15f)
             )
         )
@@ -119,12 +119,12 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
         )
 
         context.register(
-            OreFeatureSetup.COAL_VEIN,
+            OreFeatureSetup.CoalVein,
             ConfiguredFeature(Feature.ORE, OreConfiguration(coalRules, 16, 0.05f))
         )
 
         context.register(
-            OreFeatureSetup.LARGE_COAL_VEIN,
+            OreFeatureSetup.LargeCoalVein,
             ConfiguredFeature(Feature.ORE, OreConfiguration(coalRules, 38, 0.1f))
         )
     }

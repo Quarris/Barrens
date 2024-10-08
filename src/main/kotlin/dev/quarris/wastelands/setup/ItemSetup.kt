@@ -6,10 +6,10 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 object ItemSetup {
 
-    val REGISTRY: DeferredRegister.Items = DeferredRegister.createItems(ModRef.ID)
+    val Registry: DeferredRegister.Items = DeferredRegister.createItems(ModRef.ID)
 
     fun init() {
-        REGISTRY.register(MOD_BUS)
+        Registry.register(MOD_BUS)
     }
 
 }

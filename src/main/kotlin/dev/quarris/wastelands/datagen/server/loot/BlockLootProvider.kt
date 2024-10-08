@@ -25,34 +25,34 @@ class BlockLootProvider(
     private val enchantments by lazy { registries.lookupOrThrow(Registries.ENCHANTMENT) }
 
     override fun generate() {
-        dropSelf(BlockSetup.DRIED_DIRT.get())
-        dropSelf(BlockSetup.DEAD_OAK_PLANKS.get())
+        dropSelf(BlockSetup.DriedDirt.get())
+        dropSelf(BlockSetup.DeadOakPlanks.get())
 
-        dropSelf(BlockSetup.DEAD_OAK_LOG.get())
-        dropSelf(BlockSetup.DEAD_OAK_WOOD.get())
-        dropSelf(BlockSetup.STRIPPED_DEAD_OAK_LOG.get())
-        dropSelf(BlockSetup.STRIPPED_DEAD_OAK_WOOD.get())
+        dropSelf(BlockSetup.DeadOakLog.get())
+        dropSelf(BlockSetup.DeadOakWood.get())
+        dropSelf(BlockSetup.StrippedDeakOakLog.get())
+        dropSelf(BlockSetup.StrippedDeadOakWood.get())
 
-        charredWood(BlockSetup.CHARRED_DEAD_OAK_LOG.get(), BlockSetup.DEAD_OAK_LOG.get(), 0.2f)
-        charredWood(BlockSetup.CHARRED_DEAD_OAK_WOOD.get(), BlockSetup.DEAD_OAK_WOOD.get(), 0.2f)
-        charredWood(BlockSetup.STRIPPED_CHARRED_DEAD_OAK_LOG.get(), BlockSetup.STRIPPED_DEAD_OAK_LOG.get(), 0.2f)
-        charredWood(BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get(), BlockSetup.STRIPPED_DEAD_OAK_WOOD.get(), 0.2f)
+        charredWood(BlockSetup.CharredDeadOakLog.get(), BlockSetup.DeadOakLog.get(), 0.2f)
+        charredWood(BlockSetup.CharredDeadOakWood.get(), BlockSetup.DeadOakWood.get(), 0.2f)
+        charredWood(BlockSetup.StrippedCharredDeadOakLog.get(), BlockSetup.StrippedDeakOakLog.get(), 0.2f)
+        charredWood(BlockSetup.StrippedCharredDeadOakWood.get(), BlockSetup.StrippedDeadOakWood.get(), 0.2f)
 
-        dropSelf(BlockSetup.DEAD_OAK_STAIRS.get())
-        add(BlockSetup.DEAD_OAK_SLAB.get(), ::createSlabItemTable)
-        dropSelf(BlockSetup.DEAD_OAK_FENCE.get())
-        dropSelf(BlockSetup.DEAD_OAK_FENCE_GATE.get())
-        dropSelf(BlockSetup.DEAD_OAK_PRESSURE_PLATE.get())
-        dropSelf(BlockSetup.DEAD_OAK_BUTTON.get())
-        add(BlockSetup.DEAD_OAK_DOOR.get(), ::createDoorTable)
-        dropSelf(BlockSetup.DEAD_OAK_TRAPDOOR.get())
+        dropSelf(BlockSetup.DeadOakStairs.get())
+        add(BlockSetup.DeadOakSlab.get(), ::createSlabItemTable)
+        dropSelf(BlockSetup.DeadOakFence.get())
+        dropSelf(BlockSetup.DeadOakFenceGate.get())
+        dropSelf(BlockSetup.DeadOakPressurePlate.get())
+        dropSelf(BlockSetup.DeadOakButton.get())
+        add(BlockSetup.DeadOakDoor.get(), ::createDoorTable)
+        dropSelf(BlockSetup.DeadOakTrapdoor.get())
 
-        add(BlockSetup.DRIED_SHORT_GRASS.get()) { block -> createGrassDrops(block, 0.05f) }
-        add(BlockSetup.DEAD_SEAGRASS.get(), ::createShearsOnlyDrop)
-        add(BlockSetup.TALL_DEAD_SEAGRASS.get(), createDoublePlantShearsDrop(BlockSetup.DEAD_SEAGRASS.get()))
+        add(BlockSetup.DriedShortGrass.get()) { block -> createGrassDrops(block, 0.05f) }
+        add(BlockSetup.DeadSeagrass.get(), ::createShearsOnlyDrop)
+        add(BlockSetup.TallDeadSeagrass.get(), createDoublePlantShearsDrop(BlockSetup.DeadSeagrass.get()))
 
         add(
-            BlockSetup.SLATE.get(), createSilkTouchOnlyTable(BlockSetup.SLATE.get()).withPool(
+            BlockSetup.Slate.get(), createSilkTouchOnlyTable(BlockSetup.Slate.get()).withPool(
                 LootPool.lootPool()
                     .`when`(doesNotHaveSilkTouch())
                     .add(
@@ -65,7 +65,7 @@ class BlockLootProvider(
     }
 
     override fun getKnownBlocks(): MutableIterable<Block> {
-        return BlockSetup.REGISTRY.entries.stream().map { it.value() }.toList()
+        return BlockSetup.Registry.entries.stream().map { it.value() }.toList()
     }
 
     private fun charredWood(charred: Block, wood: Block, chance: Float) {
