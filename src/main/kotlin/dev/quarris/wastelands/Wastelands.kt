@@ -4,14 +4,12 @@ import dev.quarris.wastelands.setup.BlockSetup
 import dev.quarris.wastelands.setup.CreativeTabSetup
 import dev.quarris.wastelands.setup.FeatureSetup
 import dev.quarris.wastelands.setup.ItemSetup
-import net.neoforged.fml.ModContainer
-import net.neoforged.fml.common.Mod
-import net.neoforged.fml.config.ModConfig
+import net.minecraftforge.fml.ModLoadingContext
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.config.ModConfig
 
 @Mod(ModRef.ID)
-class Wastelands(
-    modContainer: ModContainer
-) {
+object Wastelands {
 
     init {
         ItemSetup.init()
@@ -19,7 +17,7 @@ class Wastelands(
         FeatureSetup.init()
         CreativeTabSetup.init()
 
-        modContainer.registerConfig(ModConfig.Type.CLIENT, WastelandsConfigs.Spec)
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, WastelandsConfigs.Spec)
     }
 
 }

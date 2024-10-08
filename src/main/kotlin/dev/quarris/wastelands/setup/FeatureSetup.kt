@@ -8,8 +8,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration
-import net.neoforged.neoforge.registries.DeferredRegister
-import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
+import net.minecraftforge.registries.DeferredRegister
+import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import java.util.function.Supplier
 
 object FeatureSetup {

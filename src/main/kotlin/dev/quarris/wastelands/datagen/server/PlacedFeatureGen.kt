@@ -4,8 +4,7 @@ import dev.quarris.wastelands.setup.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.placement.OrePlacements
+import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.BiasedToBottomInt
 import net.minecraft.world.level.block.Blocks
@@ -15,7 +14,7 @@ import net.minecraft.world.level.levelgen.placement.*
 import net.minecraft.world.level.material.Fluids
 
 object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
-    override fun run(context: BootstrapContext<PlacedFeature>) {
+    override fun run(context: BootstapContext<PlacedFeature>) {
         val features = context.lookup(Registries.CONFIGURED_FEATURE)
 
         val deadWoodFeature = features.getOrThrow(ConfiguredFeatureSetup.DeadOakTree)
@@ -104,7 +103,7 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
     }
 
-    private fun registerOres(context: BootstrapContext<PlacedFeature>) {
+    private fun registerOres(context: BootstapContext<PlacedFeature>) {
         val features = context.lookup(Registries.CONFIGURED_FEATURE)
 
         context.register(

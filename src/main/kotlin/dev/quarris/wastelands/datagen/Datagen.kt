@@ -14,18 +14,17 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.DataProvider
 import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
-import net.neoforged.neoforge.data.event.GatherDataEvent
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider
+import net.minecraftforge.data.event.GatherDataEvent
+import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 object Datagen {
 
     @SubscribeEvent
-    private fun gatherData(event: GatherDataEvent) {
-        val generator = event.generator
+     fun gatherData(event: GatherDataEvent) { val generator = event.generator
         val existingFileHelper = event.existingFileHelper
         val lookupProvider = event.lookupProvider
 
@@ -76,13 +75,12 @@ object Datagen {
                         LootContextParamSets.BLOCK
                     )
                 ),
-                lookupProvider
             )
         })
 
         // Recipes
         generator.addProvider(isServer, DataProvider.Factory { output ->
-            RecipesGen(output, lookupProvider)
+            RecipesGen(output)
         })
     }
 }

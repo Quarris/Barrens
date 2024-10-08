@@ -23,7 +23,7 @@ class PorousStoneBlock(properties: Properties) : Block(properties) {
         movedByPiston: Boolean
     ) {
         val currentNeighbourState = level.getBlockState(neighborPos)
-        if (!currentNeighbourState.isAir && previousNeighbour != this) {
+        if (!currentNeighbourState.isAir || previousNeighbour != this) {
             return
         }
 

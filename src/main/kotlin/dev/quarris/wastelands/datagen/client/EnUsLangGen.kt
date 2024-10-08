@@ -4,7 +4,7 @@ import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BlockSetup
 import dev.quarris.wastelands.setup.ItemSetup
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.common.data.LanguageProvider
+import net.minecraftforge.common.data.LanguageProvider
 
 class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_us") {
     override fun addTranslations() {

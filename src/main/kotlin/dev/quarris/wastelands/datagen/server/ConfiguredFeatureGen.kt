@@ -6,7 +6,7 @@ import dev.quarris.wastelands.setup.FeatureSetup
 import dev.quarris.wastelands.setup.OreFeatureSetup
 import net.minecraft.core.Direction
 import net.minecraft.core.RegistrySetBuilder
-import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.tags.BlockTags
@@ -24,7 +24,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 
 object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
-    override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
+    override fun run(context: BootstapContext<ConfiguredFeature<*, *>>) {
 
         val baseStoneOverworld: RuleTest = TagMatchTest(BlockTags.BASE_STONE_OVERWORLD)
 
@@ -135,7 +135,7 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
 
     }
 
-    private fun registerOres(context: BootstrapContext<ConfiguredFeature<*, *>>) {
+    private fun registerOres(context: BootstapContext<ConfiguredFeature<*, *>>) {
         val baseOverworldStones: RuleTest = TagMatchTest(BlockTags.BASE_STONE_OVERWORLD)
         val replaceableStones: RuleTest = TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES)
         val replaceableDeepslate: RuleTest = TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES)

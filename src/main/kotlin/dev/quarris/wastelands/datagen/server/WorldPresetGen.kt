@@ -7,7 +7,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.BootstapContext
 import net.minecraft.world.level.biome.*
 import net.minecraft.world.level.biome.Climate.ParameterPoint
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
@@ -26,7 +26,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
     private lateinit var endStem: LevelStem
     private lateinit var wastelandsStem: LevelStem
 
-    override fun run(context: BootstrapContext<WorldPreset>) {
+    override fun run(context: BootstapContext<WorldPreset>) {
         val biomeSources = context.lookup(Registries.MULTI_NOISE_BIOME_SOURCE_PARAMETER_LIST)
         val dimensionTypes: HolderGetter<DimensionType> = context.lookup(Registries.DIMENSION_TYPE)
         val biomes = context.lookup(Registries.BIOME)

@@ -14,7 +14,7 @@ class BoulderFeature(codec: Codec<BlockStateConfiguration>) : Feature<BlockState
         val random = context.random()
         val config: BlockStateConfiguration = context.config()
         val groundState = level.getBlockState(origin.below())
-        if (groundState.isEmpty || !groundState.fluidState.isEmpty) {
+        if (groundState.isAir || !groundState.fluidState.isEmpty) {
             return false
         }
 

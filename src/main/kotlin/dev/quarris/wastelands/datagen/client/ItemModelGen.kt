@@ -6,9 +6,8 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.minecraftforge.client.model.generators.ItemModelProvider
+import net.minecraftforge.common.data.ExistingFileHelper
 
 class ItemModelGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
     ItemModelProvider(output, ModRef.ID, exFileHelper) {

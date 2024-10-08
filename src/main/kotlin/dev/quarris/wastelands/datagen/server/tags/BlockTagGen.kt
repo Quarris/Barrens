@@ -6,15 +6,15 @@ import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
-import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.BlockTagsProvider
-import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.minecraftforge.common.Tags
+import net.minecraftforge.common.data.BlockTagsProvider
+import net.minecraftforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class BlockTagGen(
     output: PackOutput,
     lookupProvider: CompletableFuture<HolderLookup.Provider>,
-    existingFileHelper: ExistingFileHelper?
+    existingFileHelper: ExistingFileHelper
 ) : BlockTagsProvider(output, lookupProvider, ModRef.ID, existingFileHelper) {
 
     override fun addTags(provider: HolderLookup.Provider) {
@@ -25,7 +25,7 @@ class BlockTagGen(
     private fun miscTags() {
         tag(BlockTags.DIRT).add(BlockSetup.DriedDirt.get())
         tag(BlockTags.SAND).add(BlockSetup.DriedSand.get())
-        tag(Tags.Blocks.SANDSTONE_BLOCKS).add(BlockSetup.DriedSandstone.get())
+        tag(Tags.Blocks.SANDSTONE).add(BlockSetup.DriedSandstone.get())
 
 
         tag(TagSetup.Blocks.DeadOakLogs).add(

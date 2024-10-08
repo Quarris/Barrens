@@ -1,6 +1,5 @@
 package dev.quarris.wastelands.block
 
-import com.mojang.serialization.MapCodec
 import dev.quarris.wastelands.setup.BlockSetup
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -30,8 +29,8 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
         return state.isFaceSturdy(level, pos, Direction.UP) && !state.`is`(Blocks.MAGMA_BLOCK)
     }
 
-    override fun getCloneItemStack(state: BlockState, hit: HitResult, level: LevelReader, pos: BlockPos, player: Player): ItemStack {
-        return ItemStack(BlockSetup.DeadSeagrass)
+    override fun getCloneItemStack(state: BlockState, hit: HitResult, level: BlockGetter, pos: BlockPos, player: Player): ItemStack {
+        return ItemStack(BlockSetup.DeadSeagrass.get())
     }
 
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
@@ -64,7 +63,7 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
         return Shape
     }
 
-    override fun canPlaceLiquid(player: Player?, level: BlockGetter, pos: BlockPos, state: BlockState, fluid: Fluid): Boolean {
+    override fun canPlaceLiquid(level: BlockGetter, pos: BlockPos, state: BlockState, fluid: Fluid): Boolean {
         return false
     }
 
@@ -72,12 +71,7 @@ class TallDeadSeagrassBlock(properties: Properties) : DoublePlantBlock(propertie
         return false
     }
 
-    override fun codec(): MapCodec<TallDeadSeagrassBlock> {
-        return Codec
-    }
-
     companion object {
-        val Codec: MapCodec<TallDeadSeagrassBlock> = simpleCodec(::TallDeadSeagrassBlock)
         val Half: EnumProperty<DoubleBlockHalf> = HALF
         val Shape: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)
     }

@@ -9,7 +9,7 @@ object ModRef {
     val Logger: Logger = LogManager.getLogger(ID)
 
     fun res(name: String): ResourceLocation {
-        return ResourceLocation.fromNamespaceAndPath(ID, name)
+        return ResourceLocation(ID, name)
     }
 
     fun key(group: String, key: String): String {

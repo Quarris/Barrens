@@ -1,15 +1,15 @@
 package dev.quarris.wastelands
 
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.fml.event.config.ModConfigEvent
-import net.neoforged.neoforge.common.ModConfigSpec
+import net.minecraftforge.common.ForgeConfigSpec
+import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber
+import net.minecraftforge.fml.event.config.ModConfigEvent
 
 
 @EventBusSubscriber(modid = ModRef.ID, bus = EventBusSubscriber.Bus.MOD)
 object WastelandsConfigs {
 
-    private val Builder = ModConfigSpec.Builder()
+    private val Builder = ForgeConfigSpec.Builder()
 
     private val UseWastelandsDefaultPreset = Builder
         .comment("Should Wastelands preset be used as the default World Type")

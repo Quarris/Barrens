@@ -9,9 +9,12 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
-import net.neoforged.neoforge.client.model.generators.*
-import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
-import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.minecraftforge.client.model.generators.BlockModelBuilder
+import net.minecraftforge.client.model.generators.BlockStateProvider
+import net.minecraftforge.client.model.generators.ConfiguredModel
+import net.minecraftforge.client.model.generators.ItemModelBuilder
+import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile
+import net.minecraftforge.common.data.ExistingFileHelper
 
 class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, ModRef.ID, exFileHelper) {
@@ -39,7 +42,7 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
         BlockSetup.DriedShortGrass.get().let { block ->
             simpleBlock(
                 block, models().cross(name(block), blockTexture(block))
-                    .renderType(RenderType.CUTOUT.name)
+                    .renderType("cutout")
             )
             generatedBlockItem(block)
         }
@@ -47,7 +50,7 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
         BlockSetup.DeadSeagrass.get().let { block ->
             simpleBlock(
                 block, models().cross(name(block), blockTexture(block))
-                    .renderType(RenderType.CUTOUT.name)
+                    .renderType("cutout")
             )
             generatedBlockItem(block)
         }
@@ -56,15 +59,20 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             getVariantBuilder(block)
                 .forAllStates { state ->
                     val half = state.getValue(TallDeadSeagrassBlock.Half)
-                    val texture = blockTexture(block).withSuffix(if (half == DoubleBlockHalf.UPPER) "_top" else "_bottom")
-                    return@forAllStates ConfiguredModel.builder().modelFile(models().cross(texture.path, texture).renderType(RenderType.CUTOUT.name)).build()
+                    val texture =
+                        blockTexture(block).withSuffix(if (half == DoubleBlockHalf.UPPER) "_top" else "_bottom")
+                    return@forAllStates ConfiguredModel.builder()
+                        .modelFile(
+                            models().cross(texture.path, texture).renderType("cutout")
+                        )
+                        .build()
                 }
         }
 
         BlockSetup.AncientOakSapling.get().let { block ->
             simpleBlock(
-                block, plusModel(name(block), blockTexture(block))
-                    .renderType(RenderType.CUTOUT.name)
+                block,
+                plusModel(name(block), blockTexture(block)).renderType("cutout")
             )
             generatedBlockItem(block)
         }
@@ -117,14 +125,14 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
                 block,
                 texture.withSuffix("_bottom"),
                 texture.withSuffix("_top"),
-                RenderType.CUTOUT.name
+                "cutout"
             )
             itemModels().basicItem(block.asItem())
         }
 
         BlockSetup.DeadOakTrapdoor.get().let { block ->
             val texture = blockTexture(block)
-            trapdoorBlockWithRenderType(block, texture, true, RenderType.CUTOUT.name)
+            trapdoorBlockWithRenderType(block, texture, true, "cutout")
             simpleBlockItem(block, models().getExistingFile(key(block).withSuffix("_bottom")))
         }
 
@@ -195,7 +203,7 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
 
     }
 
-    fun plusModel(name: String, plus: ResourceLocation): BlockModelBuilder {
+    private fun plusModel(name: String, plus: ResourceLocation): BlockModelBuilder {
         return models().withExistingParent(name, ModRef.res("block/plus")).texture("plus", plus)
     }
 

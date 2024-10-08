@@ -20,7 +20,7 @@ class DeadOakTreeFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Featur
         val level = context.level()
         val pos = context.origin()
 
-        if (!level.getBlockState(pos.below()).`is`(BlockSetup.DriedDirt)) {
+        if (!level.getBlockState(pos.below()).`is`(BlockSetup.DriedDirt.get())) {
             return false
         }
 

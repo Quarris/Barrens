@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import java.util.*
 
 class DriedDirtBlock(properties: Properties) : Block(properties), BonemealableBlock {
-    override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
+    override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState, thing: Boolean): Boolean {
         return level.getBlockState(pos.above()).isAir
     }
 

@@ -25,7 +25,7 @@ object TagSetup {
         val RawMaterialsNuggetsCopper = createCommon("raw_materials/nuggets/copper")
 
         private fun createCommon(name: String): TagKey<Item> {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", name))
+            return ItemTags.create(ResourceLocation("c", name))
         }
     }
 

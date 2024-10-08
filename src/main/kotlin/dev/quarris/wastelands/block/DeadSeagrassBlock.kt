@@ -1,13 +1,11 @@
 package dev.quarris.wastelands.block
 
-import com.mojang.serialization.MapCodec
 import dev.quarris.wastelands.setup.BlockSetup
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.RandomSource
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -21,11 +19,11 @@ import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.neoforged.neoforge.common.IShearable
+import net.minecraftforge.common.IForgeShearable
 
-class DeadSeagrassBlock(properties: Properties) : BushBlock(properties), BonemealableBlock, LiquidBlockContainer, IShearable {
+class DeadSeagrassBlock(properties: Properties) : BushBlock(properties), BonemealableBlock, LiquidBlockContainer, IForgeShearable {
 
-    override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState): Boolean {
+    override fun isValidBonemealTarget(level: LevelReader, pos: BlockPos, state: BlockState, thing: Boolean): Boolean {
         return true
     }
 
@@ -90,7 +88,6 @@ class DeadSeagrassBlock(properties: Properties) : BushBlock(properties), Bonemea
     }
 
     override fun canPlaceLiquid(
-        player: Player?,
         level: BlockGetter,
         pos: BlockPos,
         state: BlockState,
@@ -108,12 +105,7 @@ class DeadSeagrassBlock(properties: Properties) : BushBlock(properties), Bonemea
         return false
     }
 
-    override fun codec(): MapCodec<DeadSeagrassBlock> {
-        return CODEC
-    }
-
     companion object {
-        val CODEC: MapCodec<DeadSeagrassBlock> = simpleCodec(::DeadSeagrassBlock)
         val SHAPE: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 12.0, 14.0)
     }
 }
