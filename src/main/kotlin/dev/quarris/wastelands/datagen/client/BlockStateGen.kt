@@ -6,15 +6,10 @@ import dev.quarris.wastelands.setup.BlockSetup
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
-import net.neoforged.neoforge.client.model.generators.BlockModelProvider
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
+import net.neoforged.neoforge.client.model.generators.*
 import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
@@ -64,6 +59,14 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
                     val texture = blockTexture(block).withSuffix(if (half == DoubleBlockHalf.UPPER) "_top" else "_bottom")
                     return@forAllStates ConfiguredModel.builder().modelFile(models().cross(texture.path, texture).renderType(RenderType.CUTOUT.name)).build()
                 }
+        }
+
+        BlockSetup.AncientOakSapling.get().let { block ->
+            simpleBlock(
+                block, plusModel(name(block), blockTexture(block))
+                    .renderType(RenderType.CUTOUT.name)
+            )
+            generatedBlockItem(block)
         }
     }
 
@@ -190,6 +193,10 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             .parent(UncheckedModelFile("item/generated"))
             .texture("layer0", blockTexture(block))
 
+    }
+
+    fun plusModel(name: String, plus: ResourceLocation): BlockModelBuilder {
+        return models().withExistingParent(name, ModRef.res("block/plus")).texture("plus", plus)
     }
 
     private fun key(block: Block): ResourceLocation {

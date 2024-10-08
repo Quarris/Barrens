@@ -25,6 +25,7 @@ class ItemTagGen(
 
         tag(ItemTags.DIRT).add(BlockSetup.DriedDirt.asItem())
         tag(Tags.Items.SANDSTONE_BLOCKS).add(BlockSetup.DriedSandstone.asItem())
+        tag(ItemTags.SAPLINGS).add(BlockSetup.AncientOakSapling.asItem())
 
         BlockSetup.DriedSand.asItem().let { sand ->
             tag(ItemTags.SAND).add(sand)

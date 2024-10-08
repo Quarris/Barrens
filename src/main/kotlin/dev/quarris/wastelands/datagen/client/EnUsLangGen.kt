@@ -25,6 +25,7 @@ class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_
         add(BlockSetup.DriedSandstone.get(), "Dried Sandstone")
         add(BlockSetup.PorousStone.get(), "Porous Stone")
 
+        add(BlockSetup.AncientOakSapling.get(), "Ancient Oak Sapling")
         add(BlockSetup.DeadOakLog.get(), "Dead Oak Log")
         add(BlockSetup.StrippedDeakOakLog.get(), "Stripped Dead Oak Log")
         add(BlockSetup.CharredDeadOakLog.get(), "Charred Dead Oak Log")

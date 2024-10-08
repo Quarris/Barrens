@@ -9,6 +9,7 @@ import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -19,6 +20,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator
+import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 
 class BlockLootProvider(
@@ -32,6 +34,7 @@ class BlockLootProvider(
         dropSelf(BlockSetup.DriedSand.get())
         dropSelf(BlockSetup.DriedSandstone.get())
         dropSelf(BlockSetup.DeadOakPlanks.get())
+        dropSelf(BlockSetup.AncientOakSapling.get())
 
         dropSelf(BlockSetup.DeadOakLog.get())
         dropSelf(BlockSetup.DeadOakWood.get())
@@ -52,25 +55,35 @@ class BlockLootProvider(
         add(BlockSetup.DeadOakDoor.get(), ::createDoorTable)
         dropSelf(BlockSetup.DeadOakTrapdoor.get())
 
-        add(BlockSetup.DriedShortGrass.get()) { block -> createGrassDrops(block, 0.05f) }
+        add(BlockSetup.DriedShortGrass.get()) { block ->
+            createGrassDrops(block, 0.1f).withPool(
+                LootPool.lootPool()
+                    .`when`(doesNotHaveSilkTouch())
+                    .add(
+                        LootItem.lootTableItem(BlockSetup.AncientOakSapling)
+                            .`when`(LootItemRandomChanceCondition.randomChance(0.05f))
+                            .apply(
+                                ApplyBonusCount.addUniformBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE), 2)
+                            )
+                    )
+            )
+        }
         add(BlockSetup.DeadSeagrass.get(), ::createShearsOnlyDrop)
         add(BlockSetup.TallDeadSeagrass.get(), createDoublePlantShearsDrop(BlockSetup.DeadSeagrass.get()))
 
         add(
             BlockSetup.Slate.get(), createSilkTouchOnlyTable(BlockSetup.Slate.get()).withPool(
-                LootPool.lootPool()
-                    .`when`(doesNotHaveSilkTouch())
-                    .add(
-                        LootItem.lootTableItem(Items.FLINT)
-                            .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(3, 0.5f)))
-                            .apply(
-                                ApplyBonusCount.addBonusBinomialDistributionCount(
-                                    enchantments.getOrThrow(
-                                        Enchantments.FORTUNE
-                                    ), 0.8f, 0
-                                )
+                LootPool.lootPool().`when`(doesNotHaveSilkTouch()).add(
+                    LootItem.lootTableItem(Items.FLINT)
+                        .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(3, 0.5f)))
+                        .apply(
+                            ApplyBonusCount.addBonusBinomialDistributionCount(
+                                enchantments.getOrThrow(
+                                    Enchantments.FORTUNE
+                                ), 0.8f, 0
                             )
-                    )
+                        )
+                )
             )
         )
 
@@ -88,18 +101,14 @@ class BlockLootProvider(
         return this.createSilkTouchDispatchTable(
             block, EmptyLootItem.emptyItem()
         ).withPool(
-            LootPool.lootPool()
-                .`when`(doesNotHaveSilkTouch())
-                .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))
-                .add(
+            LootPool.lootPool().`when`(doesNotHaveSilkTouch())
+                .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE))).add(
                     LootItem.lootTableItem(ItemSetup.RawIronNugget)
                         .`when`(LootItemRandomChanceCondition.randomChance(0.2f))
-                )
-                .add(
+                ).add(
                     LootItem.lootTableItem(ItemSetup.RawGoldNugget)
                         .`when`(LootItemRandomChanceCondition.randomChance(0.05f))
-                )
-                .add(
+                ).add(
                     LootItem.lootTableItem(ItemSetup.RawCopperNugget)
                         .`when`(LootItemRandomChanceCondition.randomChance(0.35f))
                         .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(3, 0.5f)))
@@ -111,13 +120,11 @@ class BlockLootProvider(
         val enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT)
         add(
             charred, createSilkTouchDispatchTable(charred, LootItem.lootTableItem(wood)).withPool(
-                LootPool.lootPool()
-                    .`when`(doesNotHaveSilkTouch())
-                    .add(
-                        LootItem.lootTableItem(Items.CHARCOAL)
-                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)))
-                            .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))
-                    )
+                LootPool.lootPool().`when`(doesNotHaveSilkTouch()).add(
+                    LootItem.lootTableItem(Items.CHARCOAL)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)))
+                        .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))
+                )
             )
         )
     }
@@ -125,11 +132,9 @@ class BlockLootProvider(
     private fun createGrassDrops(block: Block, chance: Float): LootTable.Builder {
         val enchantments = registries.lookupOrThrow(Registries.ENCHANTMENT)
         return createShearsDispatchTable(
-            block,
-            applyExplosionDecay(
+            block, applyExplosionDecay(
                 block,
-                LootItem.lootTableItem(Items.WHEAT_SEEDS)
-                    .`when`(LootItemRandomChanceCondition.randomChance(chance))
+                LootItem.lootTableItem(Items.WHEAT_SEEDS).`when`(LootItemRandomChanceCondition.randomChance(chance))
                     .apply(ApplyBonusCount.addUniformBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE), 2))
             ) as LootPoolEntryContainer.Builder<*>
         )

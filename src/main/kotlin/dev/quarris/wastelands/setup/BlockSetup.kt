@@ -62,6 +62,19 @@ object BlockSetup {
             .strength(1.2F)
     }
 
+    val AncientOakSapling: DeferredBlock<SaplingBlock> =
+        registerBlockWithItem("ancient_oak_sapling", { props ->
+            SaplingBlock(TreeGrowerSetup.DeadOak, props)
+        }) {
+            Properties.of()
+                .mapColor(MapColor.PLANT)
+                .noCollission()
+                .randomTicks()
+                .instabreak()
+                .sound(SoundType.GRASS)
+                .pushReaction(PushReaction.DESTROY)
+        }
+
     val DeadOakLog: DeferredBlock<RotatedPillarBlock> =
         registerBlockWithItem("dead_oak_log", { props -> WoodBlock(props, StrippedDeakOakLog) }) {
             log(
