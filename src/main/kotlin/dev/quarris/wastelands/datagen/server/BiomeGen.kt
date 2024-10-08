@@ -17,6 +17,13 @@ object BiomeGen : RegistryBootstrap<Biome> {
         )
 
         context.register(
+            BiomeSetup.WastelandShore, BiomeGenerators.wastelandCoast(
+                context.lookup(Registries.PLACED_FEATURE),
+                context.lookup(Registries.CONFIGURED_CARVER)
+            )
+        )
+
+        context.register(
             BiomeSetup.DeadOcean, BiomeGenerators.deadOcean(
                 context.lookup(Registries.PLACED_FEATURE),
                 context.lookup(Registries.CONFIGURED_CARVER)

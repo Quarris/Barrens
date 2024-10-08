@@ -33,11 +33,64 @@ object BiomeGenerators {
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 
         generationSettings
-            .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DriedDirtWaterLake)
+            .addFeature(GenerationStep.Decoration.LAKES, PlacedFeatureSetup.DriedWaterLake)
             .addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, PlacedFeatureSetup.SlateBoulder)
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DriedGrassPatch)
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DeadOakTree)
 
+        addWastelandDisks(generationSettings)
+        addWastelandOres(generationSettings)
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
+        BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
+        addUndergroundVariety(generationSettings)
+        BiomeDefaultFeatures.addDefaultSprings(generationSettings)
+        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
+        BiomeDefaultFeatures.addDripstone(generationSettings)
+        BiomeDefaultFeatures.addFossilDecoration(generationSettings)
+
+        return Biome.BiomeBuilder()
+            .hasPrecipitation(true)
+            .temperature(0.7f)
+            .downfall(-1.6f)
+            .specialEffects(
+                BiomeSpecialEffects.Builder()
+                    .waterColor(0x4a4728)
+                    .waterFogColor(0x3b3821)
+                    .fogColor(0x696754)
+                    .skyColor(0x5e5d4b)
+                    .grassColorOverride(0x85a322)
+                    .foliageColorOverride(0x85a322)
+                    //.ambientLoopSound(SoundEvents.AMBIENT_NETHER_WASTES_LOOP)
+                    //.ambientMoodSound(AmbientMoodSettings(SoundEvents.AMBIENT_NETHER_WASTES_MOOD, 6000, 8, 2.0))
+                    //.ambientAdditionsSound(
+                    //    AmbientAdditionsSettings(
+                    //        SoundEvents.AMBIENT_NETHER_WASTES_ADDITIONS,
+                    //        0.0111
+                    //    )
+                    //)
+                    .backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP))
+                    .build()
+            )
+            .mobSpawnSettings(mobSettings.build())
+            .generationSettings(generationSettings.build())
+            .build()
+    }
+
+    fun wastelandCoast(
+        placedFeatures: HolderGetter<PlacedFeature>,
+        worldCarvers: HolderGetter<ConfiguredWorldCarver<*>>
+    ): Biome {
+        // Mob Settings
+        val mobSettings = MobSpawnSettings.Builder()
+        BiomeDefaultFeatures.monsters(mobSettings, 20, 2, 9, false)
+
+        // Features
+        val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
+
+        generationSettings
+            .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DriedGrassPatch)
+
+        addWastelandDisks(generationSettings)
         addWastelandOres(generationSettings)
         BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
         BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
@@ -88,6 +141,7 @@ object BiomeGenerators {
         // Features
         val generationSettings = BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 
+        addWastelandDisks(generationSettings)
         addWastelandOres(generationSettings)
         BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
         BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
@@ -125,7 +179,11 @@ object BiomeGenerators {
             .build()
     }
 
-
+    // Adds wasteland disks
+    private fun addWastelandDisks(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.DriedSandDisk)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.GravelDisk)
+    }
 
     // Adds all ores present in wasteland biome
     private fun addWastelandOres(builder: BiomeGenerationSettings.Builder) {

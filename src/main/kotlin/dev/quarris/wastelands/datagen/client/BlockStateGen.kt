@@ -6,9 +6,12 @@ import dev.quarris.wastelands.setup.BlockSetup
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
+import net.neoforged.neoforge.client.model.generators.BlockModelProvider
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -24,6 +27,14 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
 
         BlockSetup.DriedDirt.get().let { block ->
             simpleRandomRotatedBlock(block)
+        }
+
+        BlockSetup.DriedSand.get().let { block ->
+            simpleRandomRotatedBlock(block)
+        }
+
+        BlockSetup.DriedSandstone.get().let { block ->
+            simpleBlockWithItem(block, cubeAll(block))
         }
 
         BlockSetup.DriedShortGrass.get().let { block ->

@@ -16,7 +16,7 @@ object EventHandler {
         private fun commonSetup(event: FMLCommonSetupEvent) {
             event.enqueueWork {
                 Regions.register(WastelandsRegion())
-                SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, ModRef.ID, SurfaceRuleSetup.makeRules());
+                SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, ModRef.ID, SurfaceRuleSetup.wasteland());
             }
         }
     }

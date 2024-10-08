@@ -31,6 +31,6 @@ class DriedShortGrass(properties: Properties) : BushBlock(properties), IShearabl
 
     companion object {
         private val Codec = simpleCodec(::DriedShortGrass)
-        private val Shape = box(0.0, 0.0, 0.0, 16.0, 1.0, 16.0)
+        private val Shape = box(2.0, 0.0, 2.0, 14.0, 3.0, 14.0)
     }
 }

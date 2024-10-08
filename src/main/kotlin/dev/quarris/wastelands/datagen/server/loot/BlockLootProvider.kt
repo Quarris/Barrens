@@ -26,6 +26,8 @@ class BlockLootProvider(
 
     override fun generate() {
         dropSelf(BlockSetup.DriedDirt.get())
+        dropSelf(BlockSetup.DriedSand.get())
+        dropSelf(BlockSetup.DriedSandstone.get())
         dropSelf(BlockSetup.DeadOakPlanks.get())
 
         dropSelf(BlockSetup.DeadOakLog.get())

@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.placement.*
+import net.minecraft.world.level.material.Fluids
 
 object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
     override fun run(context: BootstrapContext<PlacedFeature>) {
@@ -20,9 +21,10 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         val slateBoulderFeature = features.getOrThrow(ConfiguredFeatureSetup.SlateBoulder)
         val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DriedGrass)
         val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SingleDriedGrass)
-        val waterLake = features.getOrThrow(ConfiguredFeatureSetup.DriedDirtWaterLake)
-        val deadSeagrassSingle = features.getOrThrow(ConfiguredFeatureSetup.DeadSeagrassSingle)
+        val driedWaterLake = features.getOrThrow(ConfiguredFeatureSetup.DriedWaterLake)
         val deadSeagrass = features.getOrThrow(ConfiguredFeatureSetup.DeadSeagrass)
+        val driedSandDisk = features.getOrThrow(ConfiguredFeatureSetup.DriedSandDisk)
+        val gravelDisk = features.getOrThrow(ConfiguredFeatureSetup.GravelDisk)
 
         registerOres(context)
 
@@ -64,8 +66,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         )
 
         context.register(
-            PlacedFeatureSetup.DriedDirtWaterLake, PlacedFeature(
-                waterLake, listOf(
+            PlacedFeatureSetup.DriedWaterLake, PlacedFeature(
+                driedWaterLake, listOf(
                     RarityFilter.onAverageOnceEvery(20),
                     PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
                     BiomeFilter.biome()
@@ -77,6 +79,27 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
             PlacedFeatureSetup.DeadSeagrassPatch, PlacedFeature(
                 deadSeagrass, seagrassPlacement(20, 50)
             )
+        )
+
+        PlacementUtils.register(
+            context,
+            PlacedFeatureSetup.DriedSandDisk,
+            driedSandDisk,
+            CountPlacement.of(3),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)),
+            BiomeFilter.biome()
+        )
+
+        PlacementUtils.register(
+            context,
+            PlacedFeatureSetup.GravelDisk,
+            gravelDisk,
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            BlockPredicateFilter.forPredicate(BlockPredicate.matchesFluids(Fluids.WATER)),
+            BiomeFilter.biome()
         )
     }
 

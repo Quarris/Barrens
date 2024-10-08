@@ -13,6 +13,8 @@ class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_
 
     private fun addBlocks() {
         this.add(BlockSetup.DriedDirt.get(), "Dried Dirt")
+        this.add(BlockSetup.DriedSand.get(), "Dried Sand")
+        this.add(BlockSetup.DriedSandstone.get(), "Dried Sandstone")
 
         this.add(BlockSetup.DeadOakLog.get(), "Dead Oak Log")
         this.add(BlockSetup.StrippedDeakOakLog.get(), "Stripped Dead Oak Log")

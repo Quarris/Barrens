@@ -1,6 +1,7 @@
 package dev.quarris.wastelands.datagen.server
 
 import dev.quarris.wastelands.setup.BlockSetup
+import dev.quarris.wastelands.setup.ItemSetup
 import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -30,6 +31,13 @@ class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.
             .pattern("##")
             .define('#', Items.FLINT)
             .unlockedBy("has_flint", has(Items.FLINT))
+            .save(output)
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockSetup.DriedSandstone)
+            .pattern("##")
+            .pattern("##")
+            .define('#', BlockSetup.DriedSand)
+            .unlockedBy("has_sand", has(BlockSetup.DriedSand))
             .save(output)
     }
 

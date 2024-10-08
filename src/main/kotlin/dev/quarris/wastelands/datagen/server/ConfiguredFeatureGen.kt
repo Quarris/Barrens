@@ -4,23 +4,26 @@ import dev.quarris.wastelands.setup.BlockSetup
 import dev.quarris.wastelands.setup.ConfiguredFeatureSetup
 import dev.quarris.wastelands.setup.FeatureSetup
 import dev.quarris.wastelands.setup.OreFeatureSetup
+import net.minecraft.core.Direction
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
+import net.minecraft.data.worldgen.features.MiscOverworldFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.LakeFeature
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
-import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.*
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockStateProvider
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
+import java.util.List
 
 object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -60,12 +63,12 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
         )
 
         context.register(
-            ConfiguredFeatureSetup.DriedDirtWaterLake,
+            ConfiguredFeatureSetup.DriedWaterLake,
             ConfiguredFeature(
                 Feature.LAKE,
                 LakeFeature.Configuration(
                     BlockStateProvider.simple(Blocks.WATER.defaultBlockState()),
-                    BlockStateProvider.simple(BlockSetup.DriedDirt.get().defaultBlockState())
+                    BlockStateProvider.simple(BlockSetup.DriedSand.get().defaultBlockState())
                 )
             )
         )
@@ -85,6 +88,39 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
                 ProbabilityFeatureConfiguration(0.15f)
             )
         )
+
+        FeatureUtils.register(
+            context,
+            ConfiguredFeatureSetup.GravelDisk,
+            Feature.DISK,
+            DiskConfiguration(
+                RuleBasedBlockStateProvider.simple(Blocks.GRAVEL),
+                BlockPredicate.matchesBlocks(BlockSetup.DriedDirt.get(), BlockSetup.DriedSand.get()),
+                UniformInt.of(2, 5),
+                2
+            )
+        )
+
+        FeatureUtils.register(
+            context,
+            ConfiguredFeatureSetup.DriedSandDisk,
+            Feature.DISK,
+            DiskConfiguration(
+                RuleBasedBlockStateProvider(
+                    BlockStateProvider.simple(BlockSetup.DriedSand.get()),
+                    listOf(
+                        RuleBasedBlockStateProvider.Rule(
+                            BlockPredicate.matchesBlocks(Direction.DOWN.normal, Blocks.AIR),
+                            BlockStateProvider.simple(BlockSetup.DriedSandstone.get())
+                        )
+                    )
+                ),
+                BlockPredicate.matchesBlocks(BlockSetup.DriedDirt.get()),
+                UniformInt.of(2, 6),
+                2
+            )
+        )
+
     }
 
     private fun registerOres(context: BootstrapContext<ConfiguredFeature<*, *>>) {

@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
@@ -19,6 +20,14 @@ class ItemTagGen(
 ) : ItemTagsProvider(output, lookupProvider, blockTags, ModRef.ID, existingFileHelper) {
 
     override fun addTags(provider: HolderLookup.Provider) {
+        tag(ItemTags.DIRT).add(BlockSetup.DriedDirt.asItem())
+        tag(Tags.Items.SANDSTONE_BLOCKS).add(BlockSetup.DriedSandstone.asItem())
+
+        BlockSetup.DriedSand.asItem().let { sand ->
+            tag(ItemTags.SAND).add(sand)
+            tag(ItemTags.SMELTS_TO_GLASS).add(sand)
+        }
+
         tag(TagSetup.Items.DeadOakLogs).add(
             BlockSetup.DeadOakLog.asItem(),
             BlockSetup.DeadOakWood.asItem(),

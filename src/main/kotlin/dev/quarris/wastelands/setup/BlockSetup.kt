@@ -3,6 +3,7 @@ package dev.quarris.wastelands.setup
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.block.*
 import net.minecraft.core.Direction
+import net.minecraft.util.ColorRGBA
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
@@ -20,11 +21,36 @@ object BlockSetup {
 
     val Registry: DeferredRegister.Blocks = DeferredRegister.createBlocks(ModRef.ID)
 
-    val DriedDirt: DeferredBlock<Block> = registerBlockWithItem(
+    val DriedDirt: DeferredBlock<DriedDirtBlock> = registerBlockWithItem(
         "dried_dirt", ::DriedDirtBlock
     ) {
-        Properties.of().mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
+        Properties.of().mapColor(MapColor.TERRACOTTA_LIGHT_GREEN)
+            .instrument(NoteBlockInstrument.BASEDRUM)
+            .requiresCorrectToolForDrops()
             .strength(1.2F, 2.0F)
+    }
+
+    val DriedSand: DeferredBlock<Block> = registerBlockWithItem(
+        "dried_sand", { props ->
+            ColoredFallingBlock(
+                ColorRGBA(0x5D5941),
+                props
+            )
+        }
+    ) {
+        Properties.of().mapColor(MapColor.SAND)
+            .instrument(NoteBlockInstrument.SNARE)
+            .sound(SoundType.SAND)
+            .strength(0.6F)
+    }
+
+    val DriedSandstone: DeferredBlock<Block> = registerBlockWithItem(
+        "dried_sandstone", ::DriedDirtBlock
+    ) {
+        Properties.of().mapColor(MapColor.SAND)
+            .instrument(NoteBlockInstrument.BASS)
+            .requiresCorrectToolForDrops()
+            .strength(0.8F)
     }
 
     val DeadOakLog: DeferredBlock<RotatedPillarBlock> =
@@ -161,7 +187,7 @@ object BlockSetup {
         }
 
     val TallDeadSeagrass: DeferredBlock<TallDeadSeagrassBlock> =
-        registerBlockWithItem("tall_dead_seagrass", ::TallDeadSeagrassBlock) {
+        registerBlock("tall_dead_seagrass", ::TallDeadSeagrassBlock) {
             Properties.of()
                 .mapColor(MapColor.WATER)
                 .replaceable()
@@ -177,6 +203,12 @@ object BlockSetup {
         val block: DeferredBlock<B> = Registry.register(name, Supplier<B> { factory.apply(properties.get()) })
         ItemSetup.Registry.registerSimpleBlockItem(block)
         return block
+    }
+
+    private fun <B : Block> registerBlock(
+        name: String, factory: Function<Properties, B>, properties: Supplier<Properties>
+    ): DeferredBlock<B> {
+        return Registry.register(name, Supplier<B> { factory.apply(properties.get()) })
     }
 
     fun init() {

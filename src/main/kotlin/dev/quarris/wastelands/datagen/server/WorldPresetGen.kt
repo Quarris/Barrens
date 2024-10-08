@@ -61,6 +61,22 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
             .weirdness(Weirdness.FULL_RANGE)
             .build()
 
+        val coastPoints = ParameterPointListBuilder()
+            .temperature(Temperature.FULL_RANGE)
+            .humidity(Humidity.FULL_RANGE)
+            .continentalness(Continentalness.span(Continentalness.COAST, Continentalness.NEAR_INLAND))
+            .erosion(Erosion.FULL_RANGE)
+            .depth(Depth.FULL_RANGE)
+            .weirdness(
+                Weirdness.LOW_SLICE_VARIANT_ASCENDING,
+                Weirdness.LOW_SLICE_NORMAL_DESCENDING,
+                Weirdness.MID_SLICE_NORMAL_ASCENDING,
+                Weirdness.MID_SLICE_NORMAL_DESCENDING,
+                Weirdness.MID_SLICE_VARIANT_ASCENDING,
+                Weirdness.MID_SLICE_VARIANT_DESCENDING,
+            )
+            .build()
+
         val oceanPoints = ParameterPointListBuilder()
             .temperature(Temperature.FULL_RANGE)
             .humidity(Humidity.FULL_RANGE)
@@ -77,6 +93,13 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
                     biomes.getOrThrow(BiomeSetup.Wasteland)
                 )
             }.plus(
+                coastPoints.map { point: ParameterPoint ->
+                    DataPair.of<ParameterPoint, Holder<Biome>>(
+                        point,
+                        biomes.getOrThrow(BiomeSetup.WastelandShore)
+                    )
+                }
+            ).plus(
                 oceanPoints.map { point: ParameterPoint ->
                     DataPair.of<ParameterPoint, Holder<Biome>>(
                         point,

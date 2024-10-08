@@ -6,6 +6,7 @@ import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.BlockTagsProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -22,6 +23,11 @@ class BlockTagGen(
     }
 
     private fun miscTags() {
+        tag(BlockTags.DIRT).add(BlockSetup.DriedDirt.get())
+        tag(BlockTags.SAND).add(BlockSetup.DriedSand.get())
+        tag(Tags.Blocks.SANDSTONE_BLOCKS).add(BlockSetup.DriedSandstone.get())
+
+
         tag(TagSetup.Blocks.DeadOakLogs).add(
             BlockSetup.DeadOakWood.get(),
             BlockSetup.StrippedDeakOakLog.get(),
@@ -32,16 +38,8 @@ class BlockTagGen(
             BlockSetup.StrippedCharredDeadOakWood.get()
         )
 
-        tag(BlockTags.LOGS_THAT_BURN).add(
-            BlockSetup.DeadOakLog.get(),
-            BlockSetup.DeadOakWood.get(),
-            BlockSetup.StrippedDeakOakLog.get(),
-            BlockSetup.StrippedDeadOakWood.get(),
-            BlockSetup.CharredDeadOakLog.get(),
-            BlockSetup.CharredDeadOakWood.get(),
-            BlockSetup.StrippedCharredDeadOakLog.get(),
-            BlockSetup.StrippedCharredDeadOakWood.get()
-        )
+        tag(BlockTags.LOGS_THAT_BURN)
+            .addTag(TagSetup.Blocks.DeadOakLogs)
 
         tag(BlockTags.PLANKS).add(BlockSetup.DeadOakPlanks.get())
         tag(BlockTags.WOODEN_SLABS).add(BlockSetup.DeadOakSlab.get())
@@ -68,11 +66,13 @@ class BlockTagGen(
             )
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
-            BlockSetup.DriedDirt.get()
+            BlockSetup.DriedDirt.get(),
+            BlockSetup.DriedSandstone.get()
         )
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-            BlockSetup.Slate.get()
+            BlockSetup.Slate.get(),
+            BlockSetup.DriedSand.get()
         )
     }
 }

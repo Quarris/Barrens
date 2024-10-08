@@ -17,20 +17,8 @@ class BiomeTagGen(
     existingFileHelper: ExistingFileHelper
 ) : BiomeTagsProvider (output, lookupProvider, ModRef.ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
-        this.tag(BiomeTags.HAS_SHIPWRECK)
-            .addOptional(BiomeSetup.DeadOcean.location())
-
-        arrayOf(
-            BiomeTags.HAS_SHIPWRECK,
-            BiomeTags.HAS_OCEAN_RUIN_COLD
-        ).forEach { tag ->
-            this.tag(tag)
-                .addOptional(BiomeSetup.DeadOcean.location())
-        }
-
         arrayOf(
             BiomeTags.IS_OVERWORLD,
-            BiomeTags.HAS_TRAIL_RUINS,
             Tags.Biomes.IS_DEAD,
             Tags.Biomes.IS_WASTELAND,
             Tags.Biomes.IS_HOT_OVERWORLD,
@@ -38,8 +26,9 @@ class BiomeTagGen(
             TagSetup.Biomes.IsDead
         ).forEach { tag ->
             this.tag(tag)
-                .addOptional(BiomeSetup.DeadOcean.location())
                 .addOptional(BiomeSetup.Wasteland.location())
+                .addOptional(BiomeSetup.WastelandShore.location())
+                .addOptional(BiomeSetup.DeadOcean.location())
         }
     }
 }
