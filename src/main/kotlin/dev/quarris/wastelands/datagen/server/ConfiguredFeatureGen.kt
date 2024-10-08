@@ -21,7 +21,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
-import java.util.List
 
 object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
@@ -68,6 +67,22 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
                     BlockStateProvider.simple(Blocks.WATER.defaultBlockState()),
                     BlockStateProvider.simple(BlockSetup.DRIED_DIRT.get().defaultBlockState())
                 )
+            )
+        )
+
+        context.register(
+            ConfiguredFeatureSetup.DEAD_SEAGRASS_SINGLE,
+            ConfiguredFeature(
+                Feature.SIMPLE_BLOCK,
+                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DEAD_SEAGRASS.get()))
+            )
+        )
+
+        context.register(
+            ConfiguredFeatureSetup.DEAD_SEAGRASS,
+            ConfiguredFeature(
+                FeatureSetup.DEAD_SEAGRASS.get(),
+                ProbabilityFeatureConfiguration(0.15f)
             )
         )
     }

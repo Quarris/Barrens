@@ -37,6 +37,8 @@ class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_
         this.add(BlockSetup.SLATE.get(), "Slate")
 
         this.add(BlockSetup.DRIED_SHORT_GRASS.get(), "Short Dried Grass")
+        this.add(BlockSetup.DEAD_SEAGRASS.get(), "Dead Seagrass")
+        this.add(BlockSetup.TALL_DEAD_SEAGRASS.get(), "Tall Dead Seagrass")
     }
 
     private fun addMisc() {

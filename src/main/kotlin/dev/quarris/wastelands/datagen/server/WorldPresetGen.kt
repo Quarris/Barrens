@@ -66,19 +66,10 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
         val oceanPoints = ParameterPointListBuilder()
             .temperature(Temperature.FULL_RANGE)
             .humidity(Humidity.FULL_RANGE)
-            .continentalness(Continentalness.span(Continentalness.COAST, Continentalness.OCEAN))
+            .continentalness(Continentalness.span(Continentalness.DEEP_OCEAN, Continentalness.OCEAN))
             .erosion(Erosion.FULL_RANGE)
             .depth(Depth.FULL_RANGE)
-            .weirdness(Climate.Parameter.point(0f))
-            .build()
-
-        val deepOceanPoints = ParameterPointListBuilder()
-            .temperature(Temperature.FULL_RANGE)
-            .humidity(Humidity.FULL_RANGE)
-            .continentalness(Continentalness.DEEP_OCEAN)
-            .erosion(Erosion.FULL_RANGE)
-            .depth(Depth.FULL_RANGE)
-            .weirdness(Climate.Parameter.point(0f))
+            .weirdness(Weirdness.FULL_RANGE)
             .build()
 
         val parameterList =
@@ -91,14 +82,7 @@ object WorldPresetGen : RegistryBootstrap<WorldPreset> {
                 oceanPoints.map { point: ParameterPoint ->
                     DataPair.of<ParameterPoint, Holder<Biome>>(
                         point,
-                        biomes.getOrThrow(Biomes.OCEAN)
-                    )
-                }
-            ).plus(
-                deepOceanPoints.map { point: ParameterPoint ->
-                    DataPair.of<ParameterPoint, Holder<Biome>>(
-                        point,
-                        biomes.getOrThrow(Biomes.DEEP_OCEAN)
+                        biomes.getOrThrow(BiomeSetup.DEAD_OCEAN)
                     )
                 }
             ).toList()

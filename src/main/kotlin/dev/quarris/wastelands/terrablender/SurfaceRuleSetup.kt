@@ -16,6 +16,7 @@ object SurfaceRuleSetup {
     fun makeRules(): RuleSource {
         return SurfaceRules.sequence(
             SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.WASTELAND), wastelandRules()),
+            SurfaceRules.ifTrue(SurfaceRules.isBiome(BiomeSetup.DEAD_OCEAN), wastelandRules()),
         )
     }
 

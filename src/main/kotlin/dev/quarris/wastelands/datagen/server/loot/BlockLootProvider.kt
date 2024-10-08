@@ -25,7 +25,6 @@ class BlockLootProvider(
     private val enchantments by lazy { registries.lookupOrThrow(Registries.ENCHANTMENT) }
 
     override fun generate() {
-
         dropSelf(BlockSetup.DRIED_DIRT.get())
         dropSelf(BlockSetup.DEAD_OAK_PLANKS.get())
 
@@ -40,15 +39,17 @@ class BlockLootProvider(
         charredWood(BlockSetup.STRIPPED_CHARRED_DEAD_OAK_WOOD.get(), BlockSetup.STRIPPED_DEAD_OAK_WOOD.get(), 0.2f)
 
         dropSelf(BlockSetup.DEAD_OAK_STAIRS.get())
-        add(BlockSetup.DEAD_OAK_SLAB.get(), createSlabItemTable(BlockSetup.DEAD_OAK_SLAB.get()))
+        add(BlockSetup.DEAD_OAK_SLAB.get(), ::createSlabItemTable)
         dropSelf(BlockSetup.DEAD_OAK_FENCE.get())
         dropSelf(BlockSetup.DEAD_OAK_FENCE_GATE.get())
         dropSelf(BlockSetup.DEAD_OAK_PRESSURE_PLATE.get())
         dropSelf(BlockSetup.DEAD_OAK_BUTTON.get())
-        add(BlockSetup.DEAD_OAK_DOOR.get(), createDoorTable(BlockSetup.DEAD_OAK_DOOR.get()))
+        add(BlockSetup.DEAD_OAK_DOOR.get(), ::createDoorTable)
         dropSelf(BlockSetup.DEAD_OAK_TRAPDOOR.get())
 
-        add(BlockSetup.DRIED_SHORT_GRASS.get(), createGrassDrops(BlockSetup.DRIED_SHORT_GRASS.get(), 0.05f))
+        add(BlockSetup.DRIED_SHORT_GRASS.get()) { block -> createGrassDrops(block, 0.05f) }
+        add(BlockSetup.DEAD_SEAGRASS.get(), ::createShearsOnlyDrop)
+        add(BlockSetup.TALL_DEAD_SEAGRASS.get(), createDoublePlantShearsDrop(BlockSetup.DEAD_SEAGRASS.get()))
 
         add(
             BlockSetup.SLATE.get(), createSilkTouchOnlyTable(BlockSetup.SLATE.get()).withPool(

@@ -1,15 +1,15 @@
 package dev.quarris.wastelands.datagen.server
 
-import dev.quarris.wastelands.setup.ConfiguredFeatureSetup
-import dev.quarris.wastelands.setup.OreFeatureSetup
-import dev.quarris.wastelands.setup.OrePlacementSetup
-import dev.quarris.wastelands.setup.PlacedFeatureSetup
+import dev.quarris.wastelands.setup.*
+import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.BiasedToBottomInt
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
 import net.minecraft.world.level.levelgen.placement.*
 
 object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
@@ -21,6 +21,8 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
         val driedGrass = features.getOrThrow(ConfiguredFeatureSetup.DRIED_GRASS)
         val singleDriedGrass = features.getOrThrow(ConfiguredFeatureSetup.SINGLE_DRIED_GRASS)
         val waterLake = features.getOrThrow(ConfiguredFeatureSetup.DRIED_DIRT_WATER_LAKE)
+        val deadSeagrassSingle = features.getOrThrow(ConfiguredFeatureSetup.DEAD_SEAGRASS_SINGLE)
+        val deadSeagrass = features.getOrThrow(ConfiguredFeatureSetup.DEAD_SEAGRASS)
 
         registerOres(context)
 
@@ -56,9 +58,11 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
                 )
             )
         )
+
         context.register(
             PlacedFeatureSetup.DRIED_GRASS_BONEMEAL, PlacedFeature(singleDriedGrass, listOf(PlacementUtils.isEmpty()))
         )
+
         context.register(
             PlacedFeatureSetup.DRIED_DIRT_WATER_LAKE, PlacedFeature(
                 waterLake, listOf(
@@ -69,6 +73,11 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
             )
         )
 
+        context.register(
+            PlacedFeatureSetup.DEAD_SEAGRASS_PATCH, PlacedFeature(
+                deadSeagrass, seagrassPlacement(20, 50)
+            )
+        )
     }
 
     private fun registerOres(context: BootstrapContext<PlacedFeature>) {
@@ -76,22 +85,31 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
 
         context.register(
             OrePlacementSetup.COAL_VEIN_LOWER, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(30, HeightRangePlacement.triangle(
-                    VerticalAnchor.absolute(-60), VerticalAnchor.absolute(12)))
+                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(
+                    30, HeightRangePlacement.triangle(
+                        VerticalAnchor.absolute(-60), VerticalAnchor.absolute(12)
+                    )
+                )
             )
         )
 
         context.register(
             OrePlacementSetup.COAL_VEIN_UPPER, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(60, HeightRangePlacement.uniform(
-                    VerticalAnchor.absolute(12), VerticalAnchor.top()))
+                features.getOrThrow(OreFeatureSetup.COAL_VEIN), commonOrePlacement(
+                    60, HeightRangePlacement.uniform(
+                        VerticalAnchor.absolute(12), VerticalAnchor.top()
+                    )
+                )
             )
         )
 
         context.register(
             OrePlacementSetup.LARGE_COAL_VEIN, PlacedFeature(
-                features.getOrThrow(OreFeatureSetup.LARGE_COAL_VEIN), rareOrePlacement(10, HeightRangePlacement.uniform(
-                    VerticalAnchor.absolute(-20), VerticalAnchor.absolute(48)))
+                features.getOrThrow(OreFeatureSetup.LARGE_COAL_VEIN), rareOrePlacement(
+                    10, HeightRangePlacement.uniform(
+                        VerticalAnchor.absolute(-20), VerticalAnchor.absolute(48)
+                    )
+                )
             )
         )
     }
@@ -109,5 +127,15 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
 
     private fun rareOrePlacement(chance: Int, heightRange: PlacementModifier): List<PlacementModifier> {
         return orePlacement(RarityFilter.onAverageOnceEvery(chance), heightRange)
+    }
+
+    private fun seagrassPlacement(min: Int, max: Int): List<PlacementModifier> {
+        return listOf(
+            CountPlacement.of(BiasedToBottomInt.of(min, max)),
+            InSquarePlacement.spread(),
+            PlacementUtils.HEIGHTMAP_TOP_SOLID,
+            BlockPredicateFilter.forPredicate(BlockPredicate.matchesBlocks(BlockPos.ZERO, Blocks.WATER)),
+            BiomeFilter.biome()
+        )
     }
 }

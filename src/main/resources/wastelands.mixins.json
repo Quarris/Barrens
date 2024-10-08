@@ -5,7 +5,7 @@
   "package": "dev.quarris.wastelands.mixins",
   "refmap": "wastelands.refmap.json",
   "mixins": [
-
+    "BoneMealItemMixin"
   ],
   "client": [
     "CreateWorldScreenMixin"

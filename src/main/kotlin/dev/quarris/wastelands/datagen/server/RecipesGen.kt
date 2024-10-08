@@ -1,7 +1,7 @@
 package dev.quarris.wastelands.datagen.server
 
 import dev.quarris.wastelands.setup.BlockSetup
-import dev.quarris.wastelands.setup.ItemTagSetup
+import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeCategory
@@ -9,12 +9,9 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
@@ -37,7 +34,7 @@ class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.
     }
 
     private fun createWoodRecipes(output: RecipeOutput) {
-        planksFromLog(output, BlockSetup.DEAD_OAK_PLANKS, ItemTagSetup.DEAD_OAK_LOGS, 2)
+        planksFromLog(output, BlockSetup.DEAD_OAK_PLANKS, TagSetup.Items.DEAD_OAK_LOGS, 2)
         woodFromLogs(output, BlockSetup.DEAD_OAK_WOOD, BlockSetup.DEAD_OAK_LOG)
         woodFromLogs(output, BlockSetup.CHARRED_DEAD_OAK_WOOD, BlockSetup.CHARRED_DEAD_OAK_LOG)
         woodFromLogs(output, BlockSetup.STRIPPED_DEAD_OAK_WOOD, BlockSetup.STRIPPED_DEAD_OAK_LOG)

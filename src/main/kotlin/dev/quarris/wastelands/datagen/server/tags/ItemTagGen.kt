@@ -2,13 +2,12 @@ package dev.quarris.wastelands.datagen.server.tags
 
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.setup.BlockSetup
-import dev.quarris.wastelands.setup.ItemTagSetup
+import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.ItemTagsProvider
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
@@ -20,7 +19,7 @@ class ItemTagGen(
 ) : ItemTagsProvider(output, lookupProvider, blockTags, ModRef.ID, existingFileHelper) {
 
     override fun addTags(provider: HolderLookup.Provider) {
-        tag(ItemTagSetup.DEAD_OAK_LOGS).add(
+        tag(TagSetup.Items.DEAD_OAK_LOGS).add(
             BlockSetup.DEAD_OAK_LOG.asItem(),
             BlockSetup.DEAD_OAK_WOOD.asItem(),
             BlockSetup.STRIPPED_DEAD_OAK_LOG.asItem(),

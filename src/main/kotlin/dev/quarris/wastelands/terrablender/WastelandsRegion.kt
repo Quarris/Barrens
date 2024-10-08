@@ -50,6 +50,20 @@ class WastelandsRegion : Region(
                 )
             })
 
+        ParameterPointListBuilder()
+            .temperature(Temperature.FULL_RANGE)
+            .humidity(Humidity.FULL_RANGE)
+            .continentalness(Continentalness.span(Continentalness.DEEP_OCEAN, Continentalness.OCEAN))
+            .erosion(Erosion.FULL_RANGE)
+            .depth(Depth.FULL_RANGE)
+            .weirdness(Weirdness.FULL_RANGE)
+            .build().forEach(Consumer { point: ParameterPoint ->
+                builder.add(
+                    point,
+                    BiomeSetup.WASTELAND
+                )
+            })
+
         builder.build().forEach(mapper)
     }
 }

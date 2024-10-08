@@ -12,6 +12,8 @@ object PlacedFeatureSetup {
     val DRIED_GRASS_PATCH = register("dried_grass_patch")
     val DRIED_GRASS_BONEMEAL = register("single_dried_grass")
     val DRIED_DIRT_WATER_LAKE = register("dried_dirt_water_lake")
+    val DEAD_SEAGRASS_PATCH = register("dead_seagrass_patch")
+    val DEAD_SEAGRASS_BONEMEAL = register("dead_seagrass_bonemeal")
 
     private fun register(name: String) : ResourceKey<PlacedFeature> {
         return ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res(name))

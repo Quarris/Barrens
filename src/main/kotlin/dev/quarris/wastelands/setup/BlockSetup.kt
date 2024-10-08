@@ -1,9 +1,7 @@
 package dev.quarris.wastelands.setup
 
 import dev.quarris.wastelands.ModRef
-import dev.quarris.wastelands.block.DriedShortGrass
-import dev.quarris.wastelands.block.DriedDirtBlock
-import dev.quarris.wastelands.block.WoodBlock
+import dev.quarris.wastelands.block.*
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -147,6 +145,30 @@ object BlockSetup {
                 .sound(SoundType.GRASS)
                 .offsetType(BlockBehaviour.OffsetType.XYZ)
                 .ignitedByLava()
+                .pushReaction(PushReaction.DESTROY)
+        }
+
+    val DEAD_SEAGRASS: DeferredBlock<DeadSeagrassBlock> =
+        registerBlockWithItem("dead_seagrass", ::DeadSeagrassBlock) {
+            Properties.of()
+                .mapColor(MapColor.WATER)
+                .replaceable()
+                .noCollission()
+                .instabreak()
+                .sound(SoundType.WET_GRASS)
+                .offsetType(BlockBehaviour.OffsetType.XYZ)
+                .pushReaction(PushReaction.DESTROY)
+        }
+
+    val TALL_DEAD_SEAGRASS: DeferredBlock<TallDeadSeagrassBlock> =
+        registerBlockWithItem("tall_dead_seagrass", ::TallDeadSeagrassBlock) {
+            Properties.of()
+                .mapColor(MapColor.WATER)
+                .replaceable()
+                .noCollission()
+                .instabreak()
+                .sound(SoundType.WET_GRASS)
+                .offsetType(BlockBehaviour.OffsetType.XYZ)
                 .pushReaction(PushReaction.DESTROY)
         }
 

@@ -14,7 +14,6 @@ plugins {
     // OPTIONAL Kotlin Serialization plugin
     id 'org.jetbrains.kotlin.plugin.serialization' version '2.0.0'
     id "net.neoforged.gradle.userdev" version "7.+"
-    id "net.neoforged.gradle.mixin" version "7.+"
 }
 
 tasks.named('wrapper', Wrapper).configure {

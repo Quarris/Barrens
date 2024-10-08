@@ -1,5 +1,6 @@
 package dev.quarris.wastelands.block
 
+import dev.quarris.wastelands.setup.BlockSetup
 import dev.quarris.wastelands.setup.PlacedFeatureSetup
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -49,7 +50,6 @@ class DriedDirtBlock(properties: Properties) : Block(properties), BonemealableBl
                 }
             }
 
-            // If the placement position has short grass, bone meal that instead
             val placementState: BlockState = level.getBlockState(placementPos)
 
             // If the placement position has air, place the feature

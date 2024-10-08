@@ -1,12 +1,14 @@
 package dev.quarris.wastelands.datagen.client
 
 import dev.quarris.wastelands.ModRef
+import dev.quarris.wastelands.block.TallDeadSeagrassBlock
 import dev.quarris.wastelands.setup.BlockSetup
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -30,6 +32,23 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
                     .renderType(RenderType.CUTOUT.name)
             )
             generatedBlockItem(block)
+        }
+
+        BlockSetup.DEAD_SEAGRASS.get().let { block ->
+            simpleBlock(
+                block, models().cross(name(block), blockTexture(block))
+                    .renderType(RenderType.CUTOUT.name)
+            )
+            generatedBlockItem(block)
+        }
+
+        BlockSetup.TALL_DEAD_SEAGRASS.get().let { block ->
+            getVariantBuilder(block)
+                .forAllStates { state ->
+                    val half = state.getValue(TallDeadSeagrassBlock.HALF)
+                    val texture = blockTexture(block).withSuffix(if (half == DoubleBlockHalf.UPPER) "_top" else "_bottom")
+                    return@forAllStates ConfiguredModel.builder().modelFile(models().cross(texture.path, texture).renderType(RenderType.CUTOUT.name)).build()
+                }
         }
     }
 
