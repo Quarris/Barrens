@@ -5,11 +5,8 @@ import dev.quarris.wastelands.setup.ItemSetup
 import dev.quarris.wastelands.setup.TagSetup
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.RecipeProvider
-import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.data.recipes.*
+import net.minecraft.data.recipes.packs.VanillaRecipeProvider
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -20,6 +17,7 @@ class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.
 
     override fun buildRecipes(output: RecipeOutput) {
         createWoodRecipes(output)
+        createRawNuggetRecipes(output)
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 4)
             .requires(BlockSetup.Slate)
@@ -41,6 +39,21 @@ class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.
             .save(output)
     }
 
+    private fun createRawNuggetRecipes(output: RecipeOutput) {
+        storageBlock(output, Items.RAW_IRON, ItemSetup.RawIronNugget)
+        storageBlock(output, Items.RAW_GOLD, ItemSetup.RawGoldNugget)
+        storageBlock(output, Items.RAW_COPPER, ItemSetup.RawCopperNugget)
+        unpackStorageBlock(output, ItemSetup.RawIronNugget, Items.RAW_IRON)
+        unpackStorageBlock(output, ItemSetup.RawGoldNugget, Items.RAW_GOLD)
+        unpackStorageBlock(output, ItemSetup.RawCopperNugget, Items.RAW_COPPER)
+
+
+        oreSmelting(output, listOf(ItemSetup.RawIronNugget), RecipeCategory.MISC, Items.IRON_NUGGET, 0.077f, 24, "iron_nugget")
+        oreBlasting(output, listOf(ItemSetup.RawIronNugget), RecipeCategory.MISC, Items.IRON_NUGGET, 0.077f, 12, "iron_nugget")
+        oreSmelting(output, listOf(ItemSetup.RawGoldNugget), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.11f, 24, "gold_nugget")
+        oreBlasting(output, listOf(ItemSetup.RawGoldNugget), RecipeCategory.MISC, Items.GOLD_NUGGET, 0.11f, 12, "gold_nugget")
+    }
+
     private fun createWoodRecipes(output: RecipeOutput) {
         planksFromLog(output, BlockSetup.DeadOakPlanks, TagSetup.Items.DeadOakLogs, 2)
         woodFromLogs(output, BlockSetup.DeadOakWood, BlockSetup.DeadOakLog)
@@ -59,6 +72,23 @@ class RecipesGen(output: PackOutput, registries: CompletableFuture<HolderLookup.
         button(output, BlockSetup.DeadOakButton, BlockSetup.DeadOakPlanks)
         door(output, BlockSetup.DeadOakDoor, BlockSetup.DeadOakPlanks)
         trapdoor(output, BlockSetup.DeadOakTrapdoor, BlockSetup.DeadOakPlanks)
+    }
+
+    private fun storageBlock(output: RecipeOutput, storageItem: ItemLike, material: ItemLike) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, storageItem)
+            .pattern("###")
+            .pattern("###")
+            .pattern("###")
+            .define('#', material)
+            .unlockedBy("has_material", has(material))
+            .save(output)
+    }
+
+    private fun unpackStorageBlock(output: RecipeOutput, material: ItemLike, storageItem: ItemLike) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, material, 9)
+            .requires(storageItem)
+            .unlockedBy("has_storage_item", has(storageItem))
+            .save(output)
     }
 
     private fun stairs(recipeOutput: RecipeOutput, outputItem: ItemLike, material: ItemLike) {

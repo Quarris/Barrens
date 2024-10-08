@@ -3,6 +3,7 @@ package dev.quarris.wastelands.datagen
 import dev.quarris.wastelands.ModRef
 import dev.quarris.wastelands.datagen.client.BlockStateGen
 import dev.quarris.wastelands.datagen.client.EnUsLangGen
+import dev.quarris.wastelands.datagen.client.ItemModelGen
 import dev.quarris.wastelands.datagen.server.*
 import dev.quarris.wastelands.datagen.server.loot.BlockLootProvider
 import dev.quarris.wastelands.datagen.server.tags.BiomeTagGen
@@ -33,6 +34,7 @@ object Datagen {
 
         // Client
         generator.addProvider(isClient, DataProvider.Factory { output -> BlockStateGen(output, existingFileHelper) })
+        generator.addProvider(isClient, DataProvider.Factory { output -> ItemModelGen(output, existingFileHelper) })
         generator.addProvider(isClient, ::EnUsLangGen)
 
         // Server

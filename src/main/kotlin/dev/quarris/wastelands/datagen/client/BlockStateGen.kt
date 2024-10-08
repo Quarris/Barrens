@@ -37,6 +37,10 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             simpleBlockWithItem(block, cubeAll(block))
         }
 
+        BlockSetup.PorousStone.get().let { block ->
+            simpleBlockWithItem(block, cubeAll(block))
+        }
+
         BlockSetup.DriedShortGrass.get().let { block ->
             simpleBlock(
                 block, models().cross(name(block), blockTexture(block))

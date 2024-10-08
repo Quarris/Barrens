@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistrySetBuilder.RegistryBootstrap
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.placement.OrePlacements
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.util.valueproviders.BiasedToBottomInt
 import net.minecraft.world.level.block.Blocks
@@ -133,6 +134,25 @@ object PlacedFeatureGen : RegistryBootstrap<PlacedFeature> {
                         VerticalAnchor.absolute(-20), VerticalAnchor.absolute(48)
                     )
                 )
+            )
+        )
+
+        PlacementUtils.register(
+            context,
+            PlacedFeatureSetup.PorousStoneUpper,
+            features.getOrThrow(ConfiguredFeatureSetup.PorousStoneBlob),
+            rareOrePlacement(
+                6,
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))
+            )
+        )
+        PlacementUtils.register(
+            context,
+            PlacedFeatureSetup.PorousStoneLower,
+            features.getOrThrow(ConfiguredFeatureSetup.PorousStoneBlob),
+            commonOrePlacement(
+                2,
+                HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))
             )
         )
     }

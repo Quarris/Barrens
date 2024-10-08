@@ -194,6 +194,8 @@ object BiomeGenerators {
 
     // Adds the default variety excluding dirt
     private fun addUndergroundVariety(builder: BiomeGenerationSettings.Builder) {
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.PorousStoneUpper)
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.PorousStoneLower)
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRAVEL)
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRANITE_UPPER)
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_GRANITE_LOWER)

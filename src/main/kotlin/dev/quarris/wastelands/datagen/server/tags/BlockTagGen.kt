@@ -52,6 +52,8 @@ class BlockTagGen(
     }
 
     private fun miningTags() {
+        tag(BlockTags.NEEDS_STONE_TOOL)
+            .add(BlockSetup.PorousStone.get())
         tag(BlockTags.MINEABLE_WITH_AXE)
             .addTag(TagSetup.Blocks.DeadOakLogs)
             .add(
@@ -67,7 +69,8 @@ class BlockTagGen(
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
             BlockSetup.DriedDirt.get(),
-            BlockSetup.DriedSandstone.get()
+            BlockSetup.DriedSandstone.get(),
+            BlockSetup.PorousStone.get()
         )
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(

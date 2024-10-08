@@ -8,7 +8,6 @@ import net.minecraft.core.Direction
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.features.FeatureUtils
-import net.minecraft.data.worldgen.features.MiscOverworldFeatures
 import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.valueproviders.UniformInt
@@ -23,10 +22,12 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedBlockS
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
-import java.util.List
 
 object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
     override fun run(context: BootstrapContext<ConfiguredFeature<*, *>>) {
+
+        val baseStoneOverworld: RuleTest = TagMatchTest(BlockTags.BASE_STONE_OVERWORLD)
+
         registerOres(context)
 
         context.register(
@@ -58,7 +59,11 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
             ConfiguredFeatureSetup.SingleDriedGrass,
             ConfiguredFeature(
                 Feature.SIMPLE_BLOCK,
-                SimpleBlockConfiguration(BlockStateProvider.simple(BlockSetup.DriedShortGrass.get().defaultBlockState()))
+                SimpleBlockConfiguration(
+                    BlockStateProvider.simple(
+                        BlockSetup.DriedShortGrass.get().defaultBlockState()
+                    )
+                )
             )
         )
 
@@ -119,6 +124,13 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
                 UniformInt.of(2, 6),
                 2
             )
+        )
+
+        FeatureUtils.register(
+            context,
+            ConfiguredFeatureSetup.PorousStoneBlob,
+            Feature.ORE,
+            OreConfiguration(baseStoneOverworld, BlockSetup.PorousStone.get().defaultBlockState(), 64)
         )
 
     }

@@ -53,6 +53,15 @@ object BlockSetup {
             .strength(0.8F)
     }
 
+    val PorousStone: DeferredBlock<PorousStoneBlock> = registerBlockWithItem(
+        "porous_stone", ::PorousStoneBlock
+    ) {
+        Properties.of().mapColor(MapColor.STONE)
+            .instrument(NoteBlockInstrument.BASEDRUM)
+            .requiresCorrectToolForDrops()
+            .strength(1.2F)
+    }
+
     val DeadOakLog: DeferredBlock<RotatedPillarBlock> =
         registerBlockWithItem("dead_oak_log", { props -> WoodBlock(props, StrippedDeakOakLog) }) {
             log(

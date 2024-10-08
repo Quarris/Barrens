@@ -15,4 +15,5 @@ object ConfiguredFeatureSetup {
     val DeadSeagrass = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("dead_seagrass"))
     val DriedSandDisk = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("dried_sand_disk"))
     val GravelDisk = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("gravel_disk"))
+    val PorousStoneBlob = ResourceKey.create(Registries.CONFIGURED_FEATURE, ModRef.res("porous_stone_blob"))
 }

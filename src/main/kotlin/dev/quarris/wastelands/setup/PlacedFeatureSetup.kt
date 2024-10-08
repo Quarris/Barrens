@@ -15,6 +15,8 @@ object PlacedFeatureSetup {
     val DeadSeagrassPatch = register("dead_seagrass_patch")
     val DriedSandDisk = register("dried_sand_disk")
     val GravelDisk = register("gravel_disk")
+    val PorousStoneUpper = register("porous_stone_upper")
+    val PorousStoneLower = register("porous_stone_lower")
 
     private fun register(name: String) : ResourceKey<PlacedFeature> {
         return ResourceKey.create(Registries.PLACED_FEATURE, ModRef.res(name))
