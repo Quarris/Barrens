@@ -23,9 +23,13 @@ class BlockTagGen(
     }
 
     private fun miscTags() {
-        tag(BlockTags.DIRT).add(BlockSetup.DriedDirt.get())
         tag(BlockTags.SAND).add(BlockSetup.DriedSand.get())
         tag(Tags.Blocks.SANDSTONE).add(BlockSetup.DriedSandstone.get())
+
+        BlockSetup.DriedShortGrass.get().let { block ->
+            tag(BlockTags.REPLACEABLE).add(block)
+            tag(BlockTags.REPLACEABLE_BY_TREES).add(block)
+        }
 
 
         tag(TagSetup.Blocks.DeadOakLogs).add(

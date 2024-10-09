@@ -44,7 +44,6 @@ object BiomeGenerators {
         BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
         addUndergroundVariety(generationSettings)
         BiomeDefaultFeatures.addDefaultSprings(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         BiomeDefaultFeatures.addDripstone(generationSettings)
         BiomeDefaultFeatures.addFossilDecoration(generationSettings)
 
@@ -90,13 +89,12 @@ object BiomeGenerators {
         generationSettings
             .addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DriedGrassPatch)
 
-        addWastelandDisks(generationSettings)
+        addWastelandDisks(generationSettings, false)
         addWastelandOres(generationSettings)
         BiomeDefaultFeatures.addDefaultCarversAndLakes(generationSettings)
         BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
         addUndergroundVariety(generationSettings)
         BiomeDefaultFeatures.addDefaultSprings(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         BiomeDefaultFeatures.addDripstone(generationSettings)
         BiomeDefaultFeatures.addFossilDecoration(generationSettings)
 
@@ -147,9 +145,11 @@ object BiomeGenerators {
         BiomeDefaultFeatures.addDefaultCrystalFormations(generationSettings)
         addUndergroundVariety(generationSettings)
         BiomeDefaultFeatures.addDefaultSprings(generationSettings)
-        BiomeDefaultFeatures.addDefaultSoftDisks(generationSettings)
         BiomeDefaultFeatures.addDripstone(generationSettings)
-        generationSettings.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatureSetup.DeadSeagrassPatch)
+        generationSettings.addFeature(
+            GenerationStep.Decoration.VEGETAL_DECORATION,
+            PlacedFeatureSetup.DeadSeagrassPatch
+        )
 
         return Biome.BiomeBuilder()
             .hasPrecipitation(true)
@@ -180,9 +180,11 @@ object BiomeGenerators {
     }
 
     // Adds wasteland disks
-    private fun addWastelandDisks(builder: BiomeGenerationSettings.Builder) {
+    private fun addWastelandDisks(builder: BiomeGenerationSettings.Builder, addGravel: Boolean = false) {
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.DriedSandDisk)
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.GravelDisk)
+        if (addGravel) {
+            builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, PlacedFeatureSetup.GravelDisk)
+        }
     }
 
     // Adds all ores present in wasteland biome

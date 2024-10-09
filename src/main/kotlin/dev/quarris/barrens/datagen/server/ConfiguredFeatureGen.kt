@@ -73,7 +73,7 @@ object ConfiguredFeatureGen : RegistrySetBuilder.RegistryBootstrap<ConfiguredFea
                 Feature.LAKE,
                 LakeFeature.Configuration(
                     BlockStateProvider.simple(Blocks.WATER.defaultBlockState()),
-                    BlockStateProvider.simple(BlockSetup.DriedSand.get().defaultBlockState())
+                    BlockStateProvider.simple(BlockSetup.DriedDirt.get().defaultBlockState())
                 )
             )
         )

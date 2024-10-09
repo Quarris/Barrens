@@ -3,6 +3,7 @@ package dev.quarris.barrens.worldgen.feature
 import com.mojang.serialization.Codec
 import dev.quarris.barrens.setup.BlockSetup
 import net.minecraft.core.BlockPos
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.block.state.BlockState
@@ -27,7 +28,7 @@ class DeadOakTreeFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Featur
         // Generate trunk
         val height = 1 + context.random().nextInt(2)
         for (i in 0..height) {
-            if (level.isEmptyBlock(pos.above(i))) {
+            if (level.getBlockState(pos.above(i)).`is`(BlockTags.REPLACEABLE_BY_TREES)) {
                 level.setBlock(pos.above(i), deadLogOrCharred(random, 0.1f), 2)
             }
         }

@@ -17,7 +17,7 @@ object BarrensMod {
         FeatureSetup.init()
         CreativeTabSetup.init()
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BarrensConfigs.Spec)
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BarrensConfigs.Spec)
     }
 
 }
