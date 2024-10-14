@@ -62,9 +62,9 @@ object BlockSetup {
             .strength(1.2F)
     }
 
-    val AncientOakSapling: RegistryObject<SaplingBlock> =
+    val AncientOakSapling: RegistryObject<AncientSaplingBlock> =
         registerBlockWithItem("ancient_oak_sapling", { props ->
-            SaplingBlock(TreeGrowerSetup.DeadOak, props)
+            AncientSaplingBlock(TreeGrowerSetup.DeadOak, props)
         }) {
             Properties.of()
                 .mapColor(MapColor.PLANT)

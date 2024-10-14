@@ -28,7 +28,8 @@ class DeadOakTreeFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Featur
         // Generate trunk
         val height = 1 + context.random().nextInt(2)
         for (i in 0..height) {
-            if (level.getBlockState(pos.above(i)).`is`(BlockTags.REPLACEABLE_BY_TREES)) {
+            val state = level.getBlockState(pos.above(i))
+            if (state.isAir || state.`is`(BlockTags.REPLACEABLE_BY_TREES)) {
                 level.setBlock(pos.above(i), deadLogOrCharred(random, 0.1f), 2)
             }
         }
@@ -59,7 +60,10 @@ class DeadOakTreeFeature(codec: Codec<ProbabilityFeatureConfiguration>) : Featur
             return
         }
 
-        level.setBlock(pos, deadLogOrCharred(random, chance), 2)
+        val state = level.getBlockState(pos)
+        if (state.isAir || state.`is`(BlockTags.REPLACEABLE_BY_TREES)) {
+            level.setBlock(pos, deadLogOrCharred(random, chance), 2)
+        }
         for (xOff in -1..1) {
             for (zOff in -1..1) {
                 for (yOff in 0..1) {
