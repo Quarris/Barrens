@@ -31,7 +31,6 @@ class BlockTagGen(
             tag(BlockTags.REPLACEABLE_BY_TREES).add(block)
         }
 
-
         tag(TagSetup.Blocks.DeadOakLogs).add(
             BlockSetup.DeadOakWood.get(),
             BlockSetup.StrippedDeakOakLog.get(),

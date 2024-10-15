@@ -3,10 +3,14 @@ package dev.quarris.barrens.datagen.server.loot
 import dev.quarris.barrens.block.PorousStoneBlock
 import dev.quarris.barrens.setup.BlockSetup
 import dev.quarris.barrens.setup.ItemSetup
+import net.minecraft.advancements.critereon.EnchantmentPredicate
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.critereon.MinMaxBounds
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -14,11 +18,27 @@ import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition
+import net.minecraft.world.level.storage.loot.predicates.MatchTool
 import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
+import net.minecraftforge.common.ToolActions
+import net.minecraftforge.common.loot.CanToolPerformAction
 
 class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLAGS) {
+
+    protected val HAS_SILK_TOUCH: LootItemCondition.Builder = MatchTool.toolMatches(
+        ItemPredicate.Builder.item()
+            .hasEnchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))
+    )
+    protected val HAS_NO_SILK_TOUCH: LootItemCondition.Builder = HAS_SILK_TOUCH.invert()
+    protected val HAS_SHEARS: LootItemCondition.Builder =
+        CanToolPerformAction.canToolPerformAction(ToolActions.SHEARS_DIG)
+    private val HAS_SHEARS_OR_SILK_TOUCH: LootItemCondition.Builder = HAS_SHEARS.or(HAS_SILK_TOUCH)
+    private val HAS_NO_SHEARS_OR_SILK_TOUCH: LootItemCondition.Builder = HAS_SHEARS_OR_SILK_TOUCH.invert()
+
 
     override fun generate() {
         dropSelf(BlockSetup.DriedDirt.get())
@@ -59,11 +79,11 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
                     )
             )
         }
-        add(BlockSetup.DeadSeagrass.get(), ::createShearsOnlyDrop)
-        add(BlockSetup.TallDeadSeagrass.get(), createDoublePlantShearsDrop(BlockSetup.DeadSeagrass.get()))
+        add(BlockSetup.DeadSeagrass.get(), ::createShearsOrSilkTouchDrop)
+        add(BlockSetup.TallDeadSeagrass.get(), createDoublePlantShearsOrSilkTouchDrop(BlockSetup.DeadSeagrass.get()))
 
         add(
-            BlockSetup.Slate.get(), createSilkTouchOnlyTable(BlockSetup.Slate.get()).withPool(
+            BlockSetup.Slate.get(), createSilkTouchOnlyTable2(BlockSetup.Slate.get()).withPool(
                 LootPool.lootPool().`when`(HAS_NO_SILK_TOUCH).add(
                     LootItem.lootTableItem(Items.FLINT)
                         .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(3, 0.5f)))
@@ -86,8 +106,8 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
     }
 
     private fun createPorousStoneTable(block: PorousStoneBlock): LootTable.Builder {
-        return this.createSingleItemTableWithSilkTouch(
-            block, Items.AIR
+        return this.createSelfDropTable(
+            block, HAS_SILK_TOUCH, LootItem.lootTableItem(Items.AIR)
         ).withPool(
             LootPool.lootPool().`when`(HAS_NO_SILK_TOUCH)
                 .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).add(
@@ -106,7 +126,7 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
 
     private fun charredWood(charred: Block, wood: Block, chance: Float) {
         add(
-            charred, createSilkTouchDispatchTable(charred, LootItem.lootTableItem(wood)).withPool(
+            charred, createSelfDropTable(charred, HAS_SILK_TOUCH, LootItem.lootTableItem(wood)).withPool(
                 LootPool.lootPool().`when`(HAS_NO_SILK_TOUCH).add(
                     LootItem.lootTableItem(Items.CHARCOAL)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 2.0f)))
@@ -117,12 +137,50 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
     }
 
     private fun createGrassDrops(block: Block, chance: Float): LootTable.Builder {
-        return createShearsDispatchTable(
-            block, applyExplosionDecay(
+        return createSelfDropTable(
+            block, HAS_SHEARS_OR_SILK_TOUCH, applyExplosionDecay(
                 block,
                 LootItem.lootTableItem(Items.WHEAT_SEEDS).`when`(LootItemRandomChanceCondition.randomChance(chance))
                     .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE, 2))
             ) as LootPoolEntryContainer.Builder<*>
+        )
+    }
+
+    private fun createSelfDropTable(
+        pBlock: Block,
+        pConditionBuilder: LootItemCondition.Builder,
+        pAlternativeBuilder: LootPoolEntryContainer.Builder<*>
+    ): LootTable.Builder {
+        return LootTable.lootTable().withPool(
+            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f))
+                .add(LootItem.lootTableItem(pBlock).`when`(pConditionBuilder).otherwise(pAlternativeBuilder))
+        )
+    }
+
+    private fun createSilkTouchOnlyTable2(pItem: ItemLike): LootTable.Builder {
+        return LootTable.lootTable().withPool(
+            LootPool.lootPool().`when`(HAS_SILK_TOUCH).setRolls(
+                ConstantValue.exactly(1.0f)
+            ).add(LootItem.lootTableItem(pItem))
+        )
+    }
+
+    private fun createDoublePlantShearsOrSilkTouchDrop(pSheared: Block): LootTable.Builder {
+        return LootTable.lootTable().withPool(
+            LootPool.lootPool().`when`(HAS_SHEARS_OR_SILK_TOUCH).add(
+                LootItem.lootTableItem(pSheared).apply(
+                    SetItemCountFunction.setCount(
+                        ConstantValue.exactly(2.0f)
+                    )
+                )
+            )
+        )
+    }
+
+    private fun createShearsOrSilkTouchDrop(pItem: ItemLike): LootTable.Builder {
+        return LootTable.lootTable().withPool(
+            LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f)).`when`(HAS_SHEARS_OR_SILK_TOUCH)
+                .add(LootItem.lootTableItem(pItem))
         )
     }
 }

@@ -21,27 +21,17 @@ class ItemTagGen(
 ) : ItemTagsProvider(output, lookupProvider, blockTags, ModRef.ID, existingFileHelper) {
 
     override fun addTags(provider: HolderLookup.Provider) {
+        copy(TagSetup.Blocks.DeadOakLogs, TagSetup.Items.DeadOakLogs)
         rawOres()
 
-        tag(ItemTags.DIRT).add(BlockSetup.DriedDirt.get().asItem())
         tag(Tags.Items.SANDSTONE).add(BlockSetup.DriedSandstone.get().asItem())
         tag(ItemTags.SAPLINGS).add(BlockSetup.AncientOakSapling.get().asItem())
+        tag(ItemTags.LOGS_THAT_BURN).addTag(TagSetup.Items.DeadOakLogs)
 
         BlockSetup.DriedSand.get().asItem().let { sand ->
             tag(ItemTags.SAND).add(sand)
             tag(ItemTags.SMELTS_TO_GLASS).add(sand)
         }
-
-        tag(TagSetup.Items.DeadOakLogs).add(
-            BlockSetup.DeadOakLog.get().asItem(),
-            BlockSetup.DeadOakWood.get().asItem(),
-            BlockSetup.StrippedDeakOakLog.get().asItem(),
-            BlockSetup.StrippedDeadOakWood.get().asItem(),
-            BlockSetup.CharredDeadOakLog.get().asItem(),
-            BlockSetup.CharredDeadOakWood.get().asItem(),
-            BlockSetup.StrippedCharredDeadOakLog.get().asItem(),
-            BlockSetup.StrippedCharredDeadOakWood.get().asItem(),
-        )
 
         tag(ItemTags.PLANKS).add(BlockSetup.DeadOakPlanks.get().asItem())
         tag(ItemTags.WOODEN_SLABS).add(BlockSetup.DeadOakSlab.get().asItem())
