@@ -37,9 +37,9 @@ mixin {
 minecraft {
     mappings channel: mapping_channel, version: "$mapping_version-$minecraft_version"
     //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    copyIdeResources = true //Calls processResources when in dev
 
     runs {
-        copyIdeResources = true //Calls processResources when in dev
         configureEach {
             workingDirectory project.file("run/${it.name}")
             ideaModule "${rootProject.name}.${project.name}.main"

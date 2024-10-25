@@ -69,7 +69,7 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
         add(BlockSetup.DriedShortGrass.get()) { block ->
             createGrassDrops(block, 0.1f).withPool(
                 LootPool.lootPool()
-                    .`when`(HAS_NO_SILK_TOUCH)
+                    .`when`(HAS_NO_SHEARS_OR_SILK_TOUCH)
                     .add(
                         LootItem.lootTableItem(BlockSetup.AncientOakSapling.get())
                             .`when`(LootItemRandomChanceCondition.randomChance(0.05f))
