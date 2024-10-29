@@ -9,7 +9,8 @@
   ],
   "client": [
     "client.CreateWorldScreenMixin",
-    "client.LevelRendererMixin"
+    "client.LevelRendererMixin",
+    "client.WaterDropParticleMixin"
   ],
   "injectors": {
     "defaultRequire": 1
