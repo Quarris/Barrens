@@ -1,4 +1,4 @@
-package dev.quarris.barrens.mixins;
+package dev.quarris.barrens.mixins.client;
 
 import dev.quarris.barrens.BarrensConfigs;
 import dev.quarris.barrens.setup.WorldPresetSetup;
