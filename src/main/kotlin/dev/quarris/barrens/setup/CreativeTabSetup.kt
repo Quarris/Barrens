@@ -16,7 +16,7 @@ object CreativeTabSetup {
         Registry.register("main") {
             CreativeModeTab.builder()
                 .title(Component.translatable(ModRef.key("tab", "main")))
-                .icon { ItemStack(BlockSetup.DriedDirt.get()) }
+                .icon { ItemStack(BlockSetup.AncientOakSapling.get()) }
                 .displayItems { _, output ->
                     ItemSetup.Registry.entries.forEach { item ->
                         output.accept(item.get())

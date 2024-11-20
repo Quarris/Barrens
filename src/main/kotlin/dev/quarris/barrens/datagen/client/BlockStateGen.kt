@@ -7,11 +7,10 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.StandingSignBlock
+import net.minecraft.world.level.block.WallSignBlock
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
-import net.minecraftforge.client.model.generators.BlockModelBuilder
-import net.minecraftforge.client.model.generators.BlockStateProvider
-import net.minecraftforge.client.model.generators.ConfiguredModel
-import net.minecraftforge.client.model.generators.ItemModelBuilder
+import net.minecraftforge.client.model.generators.*
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile
 import net.minecraftforge.common.data.ExistingFileHelper
 
@@ -75,6 +74,10 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             )
             generatedBlockItem(block)
         }
+
+        BlockSetup.Slate.get().let { block ->
+            simpleRandomRotatedBlock(block)
+        }
     }
 
     private fun genWood() {
@@ -135,9 +138,13 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             simpleBlockItem(block, models().getExistingFile(key(block).withSuffix("_bottom")))
         }
 
-        BlockSetup.Slate.get().let { block ->
-            simpleRandomRotatedBlock(block)
-        }
+        signBlock(BlockSetup.DeadOakSign.get(), BlockSetup.DeadOakWallSign.get(), models().sign("dead_oak_sign", blockTexture(BlockSetup.DeadOakPlanks.get())))
+        signBlock(BlockSetup.DeadOakHangingSign.get(), BlockSetup.DeadOakWallHangingSign.get(), models().sign("dead_oak_hanging_sign", blockTexture(BlockSetup.DeadOakPlanks.get())))
+    }
+
+    private fun signBlock(signBlock: Block, wallSignBlock: Block, sign: ModelFile) {
+        simpleBlock(signBlock, sign)
+        simpleBlock(wallSignBlock, sign)
     }
 
     private fun genLogs() {

@@ -1,6 +1,7 @@
 package dev.quarris.barrens.datagen.client
 
 import dev.quarris.barrens.ModRef
+import dev.quarris.barrens.setup.BlockSetup
 import dev.quarris.barrens.setup.ItemSetup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -16,6 +17,9 @@ class ItemModelGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
         basicItem(ItemSetup.RawIronNugget.get())
         basicItem(ItemSetup.RawGoldNugget.get())
         basicItem(ItemSetup.RawCopperNugget.get())
+
+        basicItem(BlockSetup.DeadOakSign.get().asItem())
+        basicItem(BlockSetup.DeadOakHangingSign.get().asItem())
     }
 
     private fun key(item: Item): ResourceLocation {

@@ -65,6 +65,8 @@ class BlockLootProvider : BlockLootSubProvider(setOf(), FeatureFlags.DEFAULT_FLA
         dropSelf(BlockSetup.DeadOakButton.get())
         add(BlockSetup.DeadOakDoor.get(), ::createDoorTable)
         dropSelf(BlockSetup.DeadOakTrapdoor.get())
+        dropSelf(BlockSetup.DeadOakSign.get())
+        dropSelf(BlockSetup.DeadOakHangingSign.get())
 
         add(BlockSetup.DriedShortGrass.get()) { block ->
             createGrassDrops(block, 0.1f).withPool(

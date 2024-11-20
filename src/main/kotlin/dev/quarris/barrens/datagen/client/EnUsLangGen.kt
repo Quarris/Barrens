@@ -51,6 +51,9 @@ class EnUsLangGen(output: PackOutput) : LanguageProvider(output, ModRef.ID, "en_
         add(BlockSetup.DriedShortGrass.get(), "Short Dried Grass")
         add(BlockSetup.DeadSeagrass.get(), "Dead Seagrass")
         add(BlockSetup.TallDeadSeagrass.get(), "Tall Dead Seagrass")
+
+        add(BlockSetup.DeadOakSign.get(), "Dead Oak Sign")
+        add(BlockSetup.DeadOakHangingSign.get(), "Dead Oak Hanging Sign")
     }
 
     private fun addMisc() {

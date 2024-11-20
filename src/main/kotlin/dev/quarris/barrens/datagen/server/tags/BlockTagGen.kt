@@ -41,6 +41,11 @@ class BlockTagGen(
             BlockSetup.StrippedCharredDeadOakWood.get()
         )
 
+        tag(BlockTags.WALL_HANGING_SIGNS).add(BlockSetup.DeadOakWallHangingSign.get())
+        tag(BlockTags.CEILING_HANGING_SIGNS).add(BlockSetup.DeadOakHangingSign.get())
+        tag(BlockTags.STANDING_SIGNS).add(BlockSetup.DeadOakSign.get())
+        tag(BlockTags.WALL_SIGNS).add(BlockSetup.DeadOakWallSign.get())
+
         tag(BlockTags.LOGS_THAT_BURN)
             .addTag(TagSetup.Blocks.DeadOakLogs)
 

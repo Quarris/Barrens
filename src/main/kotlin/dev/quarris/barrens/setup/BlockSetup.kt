@@ -4,6 +4,8 @@ import dev.quarris.barrens.ModRef
 import dev.quarris.barrens.block.*
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.SignItem
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
@@ -174,6 +176,54 @@ object BlockSetup {
                 .ignitedByLava()
         }
 
+    val DeadOakSign: RegistryObject<BStandingSignBlock> =
+        registerBlock("dead_oak_sign", { props -> BStandingSignBlock(props, WoodTypeSetup.DeadOak) }) {
+            Properties.of()
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
+                .forceSolidOn()
+                .instrument(NoteBlockInstrument.BASS)
+                .noCollission()
+                .strength(1.0f)
+                .ignitedByLava()
+        }
+
+    val DeadOakWallSign: RegistryObject<BWallSignBlock> =
+        registerBlock("dead_oak_wall_sign", { props -> BWallSignBlock(props, WoodTypeSetup.DeadOak) }) {
+            Properties.of()
+                .lootFrom(DeadOakSign)
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
+                .forceSolidOn()
+                .instrument(NoteBlockInstrument.BASS)
+                .noCollission()
+                .strength(1.0f)
+                .ignitedByLava()
+        }
+
+    val DeadOakHangingSign: RegistryObject<BCeilingHangingSignBlock> =
+        registerBlock(
+            "dead_oak_hanging_sign",
+            { props -> BCeilingHangingSignBlock(props, WoodTypeSetup.DeadOak) }) {
+            Properties.of()
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
+                .forceSolidOn()
+                .instrument(NoteBlockInstrument.BASS)
+                .noCollission()
+                .strength(1.0f)
+                .ignitedByLava()
+        }
+
+    val DeadOakWallHangingSign: RegistryObject<BWallHangingSignBlock> =
+        registerBlock("dead_oak_wall_hanging_sign", { props -> BWallHangingSignBlock(props, WoodTypeSetup.DeadOak) }) {
+            Properties.of()
+                .mapColor(DeadOakPlanks.get().defaultMapColor())
+                .lootFrom(DeadOakHangingSign)
+                .forceSolidOn()
+                .instrument(NoteBlockInstrument.BASS)
+                .noCollission()
+                .strength(1.0f)
+                .ignitedByLava()
+        }
+
     val Slate: RegistryObject<Block> =
         registerBlockWithItem("slate", ::Block) {
             Properties.of()
@@ -230,7 +280,7 @@ object BlockSetup {
     private fun <B : Block> registerBlock(
         name: String, factory: Function<Properties, B>, properties: Supplier<Properties>
     ): RegistryObject<B> {
-        return Registry.register(name, Supplier<B> { factory.apply(properties.get()) })
+        return Registry.register(name) { factory.apply(properties.get()) }
     }
 
     fun init() {

@@ -1,9 +1,6 @@
 package dev.quarris.barrens
 
-import dev.quarris.barrens.setup.BlockSetup
-import dev.quarris.barrens.setup.CreativeTabSetup
-import dev.quarris.barrens.setup.FeatureSetup
-import dev.quarris.barrens.setup.ItemSetup
+import dev.quarris.barrens.setup.*
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
@@ -14,6 +11,7 @@ object BarrensMod {
     init {
         ItemSetup.init()
         BlockSetup.init()
+        BlockEntitySetup.init()
         FeatureSetup.init()
         CreativeTabSetup.init()
 
