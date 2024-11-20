@@ -7,8 +7,8 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.StandingSignBlock
-import net.minecraft.world.level.block.WallSignBlock
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.LadderBlock
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf
 import net.minecraftforge.client.model.generators.*
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile
@@ -138,8 +138,35 @@ class BlockStateGen(output: PackOutput, exFileHelper: ExistingFileHelper) :
             simpleBlockItem(block, models().getExistingFile(key(block).withSuffix("_bottom")))
         }
 
-        signBlock(BlockSetup.DeadOakSign.get(), BlockSetup.DeadOakWallSign.get(), models().sign("dead_oak_sign", blockTexture(BlockSetup.DeadOakPlanks.get())))
-        signBlock(BlockSetup.DeadOakHangingSign.get(), BlockSetup.DeadOakWallHangingSign.get(), models().sign("dead_oak_hanging_sign", blockTexture(BlockSetup.DeadOakPlanks.get())))
+        signBlock(
+            BlockSetup.DeadOakSign.get(),
+            BlockSetup.DeadOakWallSign.get(),
+            models().sign("dead_oak_sign", blockTexture(BlockSetup.DeadOakPlanks.get()))
+        )
+        signBlock(
+            BlockSetup.DeadOakHangingSign.get(),
+            BlockSetup.DeadOakWallHangingSign.get(),
+            models().sign("dead_oak_hanging_sign", blockTexture(BlockSetup.DeadOakPlanks.get()))
+        )
+
+        BlockSetup.DeadOakLadder.get().let { block ->
+            getVariantBuilder(block)
+                .forAllStatesExcept(
+                    { state ->
+                        val facing = state.getValue(LadderBlock.FACING)
+                        return@forAllStatesExcept ConfiguredModel.builder()
+                            .modelFile(
+                                models().getBuilder(name(block))
+                                    .parent(models().getExistingFile(key(Blocks.LADDER)))
+                                    .renderType("cutout")
+                                    .texture("particle", key(block).withPrefix("block/"))
+                                    .texture("texture", key(block).withPrefix("block/"))
+                            ).rotationY((facing.get2DDataValue() + 2) % 4 * 90).build()
+                    }, LadderBlock.WATERLOGGED
+                )
+
+            generatedBlockItem(block)
+        }
     }
 
     private fun signBlock(signBlock: Block, wallSignBlock: Block, sign: ModelFile) {

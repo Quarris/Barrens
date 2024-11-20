@@ -4,8 +4,6 @@ import dev.quarris.barrens.ModRef
 import dev.quarris.barrens.block.*
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.SignItem
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
@@ -222,6 +220,16 @@ object BlockSetup {
                 .noCollission()
                 .strength(1.0f)
                 .ignitedByLava()
+        }
+
+    val DeadOakLadder: RegistryObject<DeadLadderBlock> =
+        registerBlockWithItem("dead_oak_ladder", { props -> DeadLadderBlock(props) }) {
+            Properties.of()
+                .forceSolidOff()
+                .strength(0.3f)
+                .sound(SoundType.LADDER)
+                .noOcclusion()
+                .pushReaction(PushReaction.DESTROY)
         }
 
     val Slate: RegistryObject<Block> =

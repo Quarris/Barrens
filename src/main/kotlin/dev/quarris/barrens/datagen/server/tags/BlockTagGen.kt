@@ -45,6 +45,8 @@ class BlockTagGen(
         tag(BlockTags.CEILING_HANGING_SIGNS).add(BlockSetup.DeadOakHangingSign.get())
         tag(BlockTags.STANDING_SIGNS).add(BlockSetup.DeadOakSign.get())
         tag(BlockTags.WALL_SIGNS).add(BlockSetup.DeadOakWallSign.get())
+        tag(BlockTags.CLIMBABLE).add(BlockSetup.DeadOakLadder.get())
+        tag(BlockTags.FALL_DAMAGE_RESETTING).add(BlockSetup.DeadOakLadder.get())
 
         tag(BlockTags.LOGS_THAT_BURN)
             .addTag(TagSetup.Blocks.DeadOakLogs)
@@ -72,7 +74,8 @@ class BlockTagGen(
                 BlockSetup.DeadOakButton.get(),
                 BlockSetup.DeadOakPressurePlate.get(),
                 BlockSetup.DeadOakDoor.get(),
-                BlockSetup.DeadOakTrapdoor.get()
+                BlockSetup.DeadOakTrapdoor.get(),
+                BlockSetup.DeadOakLadder.get()
             )
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(

@@ -5,9 +5,11 @@ import dev.quarris.barrens.setup.ItemSetup
 import dev.quarris.barrens.setup.TagSetup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.*
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
+import net.minecraftforge.common.Tags
 import java.util.function.Consumer
 
 class RecipesGen(output: PackOutput) :
@@ -34,6 +36,15 @@ class RecipesGen(output: PackOutput) :
             .pattern("##")
             .define('#', BlockSetup.DriedSand.get())
             .unlockedBy("has_sand", has(BlockSetup.DriedSand.get()))
+            .save(output)
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockSetup.DeadOakLadder.get(), 3)
+            .pattern("S S")
+            .pattern("SWS")
+            .pattern("S S")
+            .define('S', Tags.Items.RODS_WOODEN)
+            .define('W', BlockSetup.DeadOakPlanks.get())
+            .unlockedBy("has_planks", has(BlockSetup.DeadOakPlanks.get()))
             .save(output)
     }
 
