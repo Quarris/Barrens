@@ -32,6 +32,7 @@ class BlockTagGen(
         }
 
         tag(TagSetup.Blocks.DeadOakLogs).add(
+            BlockSetup.DeadOakLog.get(),
             BlockSetup.DeadOakWood.get(),
             BlockSetup.StrippedDeakOakLog.get(),
             BlockSetup.StrippedDeadOakWood.get(),
